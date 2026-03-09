@@ -15,5 +15,7 @@
 
 * Can you list the various requirements a 'blog page' would require, where users can find hunts to participate in? Please list them like how the steps are in requirements.md.
 
+* Familiarize yourself with requirements.md now that changes have been made. Does anything look out of place, as in does any certain step seem redundant and or useless?
 
+* Do not make changes to any file yet, but please list the changes you would make to requirements.md
 
