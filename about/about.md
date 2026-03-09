@@ -12,3 +12,44 @@ The solution? A campus wide scavenger hunt that uses the app to track progress. 
 •	A User page where you can track which hunts you’ve a) participated in, and b) which hunts you’ve created.
 •	A hunt creation page where a user can write the puzzle for their hunt, and choose on a map where they want their hunt to lead.
 
+## Gemini's Approach
+ Key Takeaways
+   - User-Generated Content: Users can create scavenger hunts involving puzzles
+     or riddles that lead to specific physical locations.
+   - GPS-Based Completion: The app uses GPS to verify when a participant has
+     reached the correct destination described in the puzzle.
+   - Social Integration: A "like" system for completed hunts and a "popular"
+     page to highlight top-rated hunts.
+   - Personal Tracking: A user profile to track both created and completed
+     hunts.
+   - Creation Workflow: A dedicated interface for writing riddles and selecting
+     a target location on a map.
+
+
+  App Requirements & Recommendations
+  To build this successfully, the app will likely need:
+   1. Maps Integration:
+      - Google Maps (or similar): For selecting target locations during creation
+        and providing a visual guide (if allowed) during the hunt.
+      - Geofencing: To automatically trigger "Correct!" when a user enters the
+        designated area.
+   2. Real-time Data:
+      - Cloud Firestore: To store hunt details (riddle, coordinates, like
+        counts) and user progress instantly.
+   3. Advanced Permissions:
+      - Location Services: Requesting foreground and potentially background
+        location access (depending on UX).
+   4. Enhanced UX Features:
+      - Clue/Hint System: A way for creators to provide optional hints if a user
+        is stuck.
+      - Media Support: Allowing creators to attach images or audio clips as part
+        of the riddle.
+      - Leaderboards: A global or hunt-specific leaderboard to foster
+        competition.
+   5. Safety & Moderation:
+      - Report Button: To handle inappropriate content in user-generated
+        riddles.
+      - Privacy Zones: To prevent users from creating hunts in restricted or
+  Would you like to proceed with Step 1.2 or focus on one of these specific
+  areas?
+
