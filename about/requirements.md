@@ -1,5 +1,6 @@
 # Project Requirements: Hunt App 
 Developer: James Walker 
+
 Description: This app is designed to give users a unique experience of creating their own scavenger hunts using GPS that
                 can be shared to others to complete
  
@@ -38,64 +39,68 @@ Phase 1: Project Setup & Core Infrastructure
         -	Wrap MyApp in a ProviderScope. 
 
 Phase 2: Milestone 1 - The "Minimum Viable Product" (MVP) 
-Goal: The core defining feature of the app must function with mock data or local state. Note: Focus on functionality, not perfect styling yet.
 
-      [ ] Step 2.1: Hunt Data Model
-           - Create a Hunt model in lib/models/hunt.dart (fields: id, title,
+Goal: The core defining feature of the app must function with mock data or local state. This phase focuses on establishing a baseline model for the 'Hunt Homepage.' This does not include any GPS implementation yet, but it does include live updates for creating new hunts, signing in, etc.
+
+    [ ] Step 2.1: Hunt Data Model
+        - Create a Hunt model in lib/models/hunt.dart (fields: id, title,
              description, creatorName, difficulty, rating, and location).
-           - Implement fromFirestore and toMap for seamless Firebase
+        - Implement fromFirestore and toMap for seamless Firebase
              integration.
 
-      [ ] Step 2.2: Hunt Discovery Service
-           - Implement HuntService in lib/services/hunt_service.dart.
-           - Add logic to fetch a stream or list of available hunts from the
+    [ ] Step 2.2: Hunt Discovery Service
+        - Implement HuntService in lib/services/hunt_service.dart.
+        - Add logic to fetch a stream or list of available hunts from the
              "hunts" collection in Firestore.
 
-      [ ] Step 2.3: State Management (Providers)
-           - Create a huntsProvider (StreamProvider) in
+    [ ] Step 2.3: State Management (Providers)
+        - Create a huntsProvider (StreamProvider) in
              lib/providers/hunt_providers.dart to expose the hunt list.
-           - Add a searchQueryProvider (StateProvider) to handle real-time
+        - Add a searchQueryProvider (StateProvider) to handle real-time
              filtering of the list.
 
-      [ ] Step 2.4: Discovery Screen UI
-           - Create HuntDiscoveryScreen in lib/screens/discovery_screen.dart.
-           - Use a ListView.builder or GridView to display hunts.
-           - Implement AsyncValue.when() to handle loading and error states
+    [ ] Step 2.4: Discovery Screen UI
+        - Create HuntDiscoveryScreen in lib/screens/discovery_screen.dart.
+        - Use a ListView.builder or GridView to display hunts.
+        - Implement AsyncValue.when() to handle loading and error states
              gracefully.
 
-      [ ] Step 2.5: Hunt Card Widget
-           - Extract the hunt item UI into a dedicated HuntCard in
+    [ ] Step 2.5: Hunt Card Widget
+        - Extract the hunt item UI into a dedicated HuntCard in
              lib/widgets/hunt_card.dart.
-           - Include visual indicators for difficulty, estimated time, or user
+        - Include visual indicators for difficulty, estimated time, or user
              ratings.
 
-      [ ] Step 2.6: Navigation & Details
-           - Create a HuntDetailScreen in lib/screens/hunt_detail_screen.dart.
-           - Set up navigation so tapping a card takes the user to the full
+    [ ] Step 2.6: Navigation & Details
+        - Create a HuntDetailScreen in lib/screens/hunt_detail_screen.dart.
+        - Set up navigation so tapping a card takes the user to the full
              description and "Start Hunt" button.
+
+    [ ] Step 2.7: Basic Profile Implementations
+        - Allow for users to create an account, sign-in, and sign-out. 
+        - Users can choose to make a new password if they 'Forgot' their current one.
+
 
 
 Phase 3: GPS Service Implementation
 
-    [ ] Step 2.1: UI Interface:
-        - Create a forum page that allows for 
+Goal: The GPS features of this app will allow users to create geo-specific hunts correlating to a real world location. It will require 
 
-    [ ] Step 2.: Maps Integration:
+    [ ] Step 2.1: Maps Integration:
         - Google Maps (or similar): For selecting target locations during creation
         and providing a visual guide (if allowed) during the hunt.
         - Geofencing: To automatically trigger "Correct!" when a user enters the
         designated area.
 
-    [ ] Step 2.: Real-time Data:
+    [ ] Step 2.2: Real-time Data:
         - Cloud Firestore: To store hunt details (riddle, coordinates, like
         counts) and user progress instantly.
 
-    [ ] Step 2.: Advanced Permissions:
+    [ ] Step 2.3: Advanced Permissions:
         - Location Services: Requesting foreground and potentially background
         location access (depending on UX).
 
-
-    [ ] Step 2.: Enhanced UX Features:
+    [ ] Step 2.4: Enhanced UX Features:
         - Clue/Hint System: A way for creators to provide optional hints if a user
         is stuck.
         - Media Support: Allowing creators to attach images or audio clips as part
@@ -103,12 +108,10 @@ Phase 3: GPS Service Implementation
         - Leaderboards: A global or hunt-specific leaderboard to foster
         competition.
 
-
-    [ ] Step 2.: Safety & Moderation:
+    [ ] Step 2.5: Safety & Moderation:
         - Report Button: To handle inappropriate content in user-generated
         riddles.
-        - Privacy Zones: To prevent users from creating hunts in restricted or
-
+        - Privacy Zones: To prevent users from creating hunts in restricted or private areas
 
  
 Phase 3: Milestone 2 - App Functionality and Integration (Auth & Database) 
