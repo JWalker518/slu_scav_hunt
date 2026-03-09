@@ -9,3 +9,5 @@
 * Can you read the about.md file in the about folder and summarize to me the key take aways you've gotten from it, along with what you think it may need for an app
 
 * Please continue with Phase 1, step 1.2 please
+
+### March 9th
