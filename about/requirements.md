@@ -38,36 +38,76 @@ Phase 1: Project Setup & Core Infrastructure
         -	Wrap MyApp in a ProviderScope. 
 
 Phase 2: Milestone 1 - The "Minimum Viable Product" (MVP) 
-Goal: The core defining feature of the app must function with mock data or local state. Note: Focus on functionality, not perfect styling yet. 
+Goal: The core defining feature of the app must function with mock data or local state. Note: Focus on functionality, not perfect styling yet.
 
-    [ ] Step 2.1: Maps Integration:
-      - Google Maps (or similar): For selecting target locations during creation
+      [ ] Step 2.1: Hunt Data Model
+           - Create a Hunt model in lib/models/hunt.dart (fields: id, title,
+             description, creatorName, difficulty, rating, and location).
+           - Implement fromFirestore and toMap for seamless Firebase
+             integration.
+
+      [ ] Step 2.2: Hunt Discovery Service
+           - Implement HuntService in lib/services/hunt_service.dart.
+           - Add logic to fetch a stream or list of available hunts from the
+             "hunts" collection in Firestore.
+
+      [ ] Step 2.3: State Management (Providers)
+           - Create a huntsProvider (StreamProvider) in
+             lib/providers/hunt_providers.dart to expose the hunt list.
+           - Add a searchQueryProvider (StateProvider) to handle real-time
+             filtering of the list.
+
+      [ ] Step 2.4: Discovery Screen UI
+           - Create HuntDiscoveryScreen in lib/screens/discovery_screen.dart.
+           - Use a ListView.builder or GridView to display hunts.
+           - Implement AsyncValue.when() to handle loading and error states
+             gracefully.
+
+      [ ] Step 2.5: Hunt Card Widget
+           - Extract the hunt item UI into a dedicated HuntCard in
+             lib/widgets/hunt_card.dart.
+           - Include visual indicators for difficulty, estimated time, or user
+             ratings.
+
+      [ ] Step 2.6: Navigation & Details
+           - Create a HuntDetailScreen in lib/screens/hunt_detail_screen.dart.
+           - Set up navigation so tapping a card takes the user to the full
+             description and "Start Hunt" button.
+
+
+Phase 3: GPS Service Implementation
+
+    [ ] Step 2.1: UI Interface:
+        - Create a forum page that allows for 
+
+    [ ] Step 2.: Maps Integration:
+        - Google Maps (or similar): For selecting target locations during creation
         and providing a visual guide (if allowed) during the hunt.
-      - Geofencing: To automatically trigger "Correct!" when a user enters the
+        - Geofencing: To automatically trigger "Correct!" when a user enters the
         designated area.
 
-    [ ] Step 2.2: Real-time Data:
-      - Cloud Firestore: To store hunt details (riddle, coordinates, like
+    [ ] Step 2.: Real-time Data:
+        - Cloud Firestore: To store hunt details (riddle, coordinates, like
         counts) and user progress instantly.
 
-    [ ] Step 2.3: Advanced Permissions:
-      - Location Services: Requesting foreground and potentially background
+    [ ] Step 2.: Advanced Permissions:
+        - Location Services: Requesting foreground and potentially background
         location access (depending on UX).
 
 
-    [ ] Step 2.4: Enhanced UX Features:
-      - Clue/Hint System: A way for creators to provide optional hints if a user
+    [ ] Step 2.: Enhanced UX Features:
+        - Clue/Hint System: A way for creators to provide optional hints if a user
         is stuck.
-      - Media Support: Allowing creators to attach images or audio clips as part
+        - Media Support: Allowing creators to attach images or audio clips as part
         of the riddle.
-      - Leaderboards: A global or hunt-specific leaderboard to foster
+        - Leaderboards: A global or hunt-specific leaderboard to foster
         competition.
 
 
-    [ ] Step 2.5: Safety & Moderation:
-      - Report Button: To handle inappropriate content in user-generated
+    [ ] Step 2.: Safety & Moderation:
+        - Report Button: To handle inappropriate content in user-generated
         riddles.
-      - Privacy Zones: To prevent users from creating hunts in restricted or
+        - Privacy Zones: To prevent users from creating hunts in restricted or
 
 
  

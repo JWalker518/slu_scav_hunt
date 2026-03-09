@@ -11,3 +11,9 @@
 * Please continue with Phase 1, step 1.2 please
 
 ### March 9th
+* Please familiarize yourself with requirements.md located in the about folder. Do not execute any code
+
+* Can you list the various requirements a 'blog page' would require, where users can find hunts to participate in? Please list them like how the steps are in requirements.md.
+
+
+
