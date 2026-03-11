@@ -20,4 +20,32 @@ class Hunt {
     required this.coordinates,
     required this.riddle,
   });
+
+  /// Create a Hunt object from a Firestore document
+  factory Hunt.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return Hunt(
+      id: doc.id,
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      creatorName: data['creatorName'] ?? '',
+      difficulty: data['difficulty'] ?? '',
+      rating: (data['rating'] ?? 0.0).toDouble(),
+      coordinates: data['coordinates'] ?? const GeoPoint(0, 0),
+      riddle: data['riddle'] ?? '',
+    );
+  }
+
+  /// Convert a Hunt object into a Map for Firestore storage
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'creatorName': creatorName,
+      'difficulty': difficulty,
+      'rating': rating,
+      'coordinates': coordinates,
+      'riddle': riddle,
+    };
+  }
 }

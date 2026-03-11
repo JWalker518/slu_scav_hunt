@@ -22,4 +22,7 @@
 ### March 11th
 * Please continue to Step 2.1 in requirements.md, while adhering to the AI guidelines and the step information itself.
 
+* Yes, please proceed to step 2.2
+
+
 

@@ -45,7 +45,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
     [x] Step 2.1: Hunt Data Model
         - Create a Hunt model in lib/models/hunt.dart (fields: id, title, description, creatorName, difficulty, rating, coordinates, and riddle).
 
-    [ ] Step 2.2: Firebase implementation
+    [x] Step 2.2: Firebase implementation
         - Implement fromFirestore and toMap for seamless Firebase integration.
 
     [ ] Step 2.3: Hunt Discovery Service

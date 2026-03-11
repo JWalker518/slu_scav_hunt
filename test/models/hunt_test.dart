@@ -34,5 +34,28 @@ void main() {
       expect(hunt.coordinates, coordinates);
       expect(hunt.riddle, riddle);
     });
+
+    test('toMap should return a correct map representation', () {
+      final hunt = Hunt(
+        id: 'test_id',
+        title: 'Test Hunt',
+        description: 'Test Description',
+        creatorName: 'Test Creator',
+        difficulty: 'Easy',
+        rating: 4.5,
+        coordinates: const GeoPoint(44.5912, -75.1667),
+        riddle: 'Test Riddle',
+      );
+
+      final map = hunt.toMap();
+
+      expect(map['title'], 'Test Hunt');
+      expect(map['description'], 'Test Description');
+      expect(map['creatorName'], 'Test Creator');
+      expect(map['difficulty'], 'Easy');
+      expect(map['rating'], 4.5);
+      expect(map['coordinates'], const GeoPoint(44.5912, -75.1667));
+      expect(map['riddle'], 'Test Riddle');
+    });
   });
 }

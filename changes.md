@@ -29,5 +29,14 @@ Please continue to Step 2.1 in requirements.md, while adhering to the AI guideli
 - **`lib/models/hunt.dart`**: Created the `Hunt` data model with fields for `id`, `title`, `description`, `creatorName`, `difficulty`, `rating`, `coordinates`, and `riddle`.
 - **`test/models/hunt_test.dart`**: Created a unit test to verify the `Hunt` model instantiation.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Continued
+
+### Prompt:
+Yes, please proceed to step 2.2
+
+### Changed
+- **`lib/models/hunt.dart`**: Implemented `fromFirestore` factory constructor and `toMap` method for Firebase integration.
+- **`test/models/hunt_test.dart`**: Added a test for the `toMap` method.
+
 ### Changed
 - **`about/requirements.md`**: Updated and restructured the implementation roadmap for Phase 2-5, and marked Phase 1 as complete.
