@@ -38,5 +38,16 @@ Yes, please proceed to step 2.2
 - **`lib/models/hunt.dart`**: Implemented `fromFirestore` factory constructor and `toMap` method for Firebase integration.
 - **`test/models/hunt_test.dart`**: Added a test for the `toMap` method.
 
+## [2026-03-11] - Firebase Configuration & Initialization
+
+### Prompt:
+I have recently added firebase to this project, please familiarize yourself with the new changes
+
+### Added
+- **Firebase Configuration**: Added `firebase_options.dart`, `firebase.json`, `firestore.rules`, and `firestore.indexes.json` (via FlutterFire CLI).
+
+### Changed
+- **`lib/main.dart`**: Updated the `main` function to initialize Firebase using `WidgetsFlutterBinding.ensureInitialized()` and `Firebase.initializeApp()`.
+
 ### Changed
 - **`about/requirements.md`**: Updated and restructured the implementation roadmap for Phase 2-5, and marked Phase 1 as complete.

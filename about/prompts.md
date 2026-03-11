@@ -24,5 +24,7 @@
 
 * Yes, please proceed to step 2.2
 
+* I have recently added firebase to this project, please familiarizeyourself with the new changes
+
 
 
