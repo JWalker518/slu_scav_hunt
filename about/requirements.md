@@ -48,7 +48,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
     [x] Step 2.2: Firebase implementation
         - Implement fromFirestore and toMap for seamless Firebase integration.
 
-    [ ] Step 2.3: Hunt Discovery Service
+    [x] Step 2.3: Hunt Discovery Service
         - Implement HuntService in lib/services/hunt_service.dart.
         - Add logic to fetch a stream or list of available hunts from the "hunts" collection in Firestore.
 

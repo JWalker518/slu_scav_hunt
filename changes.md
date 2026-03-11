@@ -38,6 +38,19 @@ Yes, please proceed to step 2.2
 - **`lib/models/hunt.dart`**: Implemented `fromFirestore` factory constructor and `toMap` method for Firebase integration.
 - **`test/models/hunt_test.dart`**: Added a test for the `toMap` method.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Continued
+
+### Prompt:
+Please continue to Step 2.3
+
+### Added
+- **`lib/services/hunt_service.dart`**: Created the `HuntService` class with methods `getHunts()` and `searchHunts(query)` to fetch data from Firestore.
+- **`test/services/hunt_service_test.dart`**: Created unit tests for the `HuntService` using `fake_cloud_firestore`.
+- **`pubspec.yaml`**: Added `fake_cloud_firestore` to `dev_dependencies` for robust testing.
+
+### Changed
+- **`about/requirements.md`**: Marked Step 2.3 as complete.
+
 ## [2026-03-11] - Firebase Configuration & Initialization
 
 ### Prompt:

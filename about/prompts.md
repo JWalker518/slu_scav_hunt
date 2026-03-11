@@ -26,5 +26,7 @@
 
 * I have recently added firebase to this project, please familiarizeyourself with the new changes
 
+* Please continue to step 2.3
+
 
 
