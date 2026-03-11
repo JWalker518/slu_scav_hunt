@@ -42,7 +42,7 @@ Phase 1: Project Setup & Core Infrastructure
 Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed)
 Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This focuses on browsing community hunts before adding GPS or creation logic.
 
-    [ ] Step 2.1: Hunt Data Model
+    [x] Step 2.1: Hunt Data Model
         - Create a Hunt model in lib/models/hunt.dart (fields: id, title, description, creatorName, difficulty, rating, coordinates, and riddle).
 
     [ ] Step 2.2: Firebase implementation
