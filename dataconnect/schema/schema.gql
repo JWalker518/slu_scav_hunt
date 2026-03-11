@@ -1,0 +1,48 @@
+type User @table {
+  displayName: String!
+  email: String
+  photoUrl: String
+  totalRewardsEarned: Int
+  createdAt: Timestamp!
+}
+
+type ARG @table {
+  title: String!
+  description: String!
+  imageUrl: String
+  rewardsPerRiddle: Int
+  rewardsForCompletion: Int
+  isPublished: Boolean!
+  createdAt: Timestamp!
+  creator: User!
+}
+
+type Riddle @table {
+  title: String!
+  problemDescription: String!
+  correctAnswer: String!
+  hint: String
+  difficultyLevel: String
+  pointsReward: Int
+  orderInARG: Int!
+  createdAt: Timestamp!
+  arg: ARG!
+}
+
+type Solution @table {
+  submittedAnswer: String!
+  isCorrect: Boolean!
+  timeTaken: Int
+  createdAt: Timestamp!
+  user: User!
+  riddle: Riddle!
+}
+
+type Comment @table {
+  content: String!
+  isHint: Boolean
+  createdAt: Timestamp!
+  parentCommentId: UUID
+  user: User!
+  riddle: Riddle!
+}

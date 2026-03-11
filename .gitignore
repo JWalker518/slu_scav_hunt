@@ -47,3 +47,4 @@ app.*.map.json
 # AI specific
 pubspec.lock
 
+lib/firebase_options.dart

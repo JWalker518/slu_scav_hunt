@@ -1,0 +1,44 @@
+query ListPublishedARGs @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  aRGS(where: {isPublished: {eq: true}}, orderBy: [{createdAt: DESC}]) {
+    id
+    title
+    description
+    imageUrl
+    rewardsPerRiddle
+    rewardsForCompletion
+    creator {
+      displayName
+    }
+  }
+}
+
+mutation CreateComment($content: String!, $riddleId: UUID!, $isHint: Boolean) @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  comment_insert(data: {
+    content: $content,
+    riddleId: $riddleId,
+    isHint: $isHint,
+    userId_expr: "auth.uid"
+  }) {
+    id
+  }
+}
+
+query MySolutions(@riddleId: UUID) @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  solutions(where: {userId_expr: "auth.uid", riddleId: {eq: $riddleId}}, orderBy: [{createdAt: DESC}]) {
+    id
+    submittedAnswer
+    isCorrect
+    timeTaken
+    riddle {
+      title
+    }
+  }
+}
+
+mutation UpdateUserDisplayName($displayName: String!) @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  user_update(key: {id_expr: "auth.uid"}, data: {
+    displayName: $displayName
+  }) {
+    id
+  }
+}

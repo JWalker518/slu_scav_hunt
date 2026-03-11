@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266549713751",
+    "project_id": "slu-scav-hunt",
+    "storage_bucket": "slu-scav-hunt.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266549713751:android:50ec1f285dd53974b73c12",
+        "android_client_info": {
+          "package_name": "com.example.slu_scav_hunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7DrNlrlVMYDNfx6JvOPFdrNWUQ_I0yK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

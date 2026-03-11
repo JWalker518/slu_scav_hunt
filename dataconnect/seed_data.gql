@@ -1,0 +1,125 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "Seed data can be created by any authenticated user for demonstration purposes.") {
+  user_insertMany(data: [
+    {
+      id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+      displayName: "ExplorerOne",
+      email: "explorer1@example.com",
+      createdAt: "2023-01-01T10:00:00Z"
+    },
+    {
+      id: "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e",
+      displayName: "RiddleMaster",
+      email: "riddles@example.com",
+      createdAt: "2023-01-02T11:00:00Z"
+    }
+  ])
+  aRG_insertMany(data: [
+    {
+      id: "c7e8f9a0-b1c2-d3e4-f5a6-7b8c9d0e1f2a",
+      title: "The Forest of Whispers",
+      description: "An adventure through a mystical forest filled with ancient riddles.",
+      imageUrl: "https://example.com/forest.jpg",
+      rewardsPerRiddle: 50,
+      rewardsForCompletion: 200,
+      isPublished: true,
+      createdAt: "2023-01-05T12:00:00Z",
+      creator: { id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11" }
+    },
+    {
+      id: "d8f9a0b1-c2d3-e4f5-a6b7-c8d9e0f1a2b3",
+      title: "City of Shadows",
+      description: "A dark and mysterious journey through a cyberpunk city.",
+      imageUrl: "https://example.com/city.jpg",
+      rewardsPerRiddle: 75,
+      rewardsForCompletion: 300,
+      isPublished: true,
+      createdAt: "2023-01-06T13:00:00Z",
+      creator: { id: "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e" }
+    }
+  ])
+  riddle_insertMany(data: [
+    {
+      id: "e9f0a1b2-c3d4-e5f6-a7b8-c9d0e1f2a3b4",
+      title: "The First Enigma",
+      problemDescription: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+      correctAnswer: "An echo",
+      hint: "Think about sound.",
+      difficultyLevel: "Easy",
+      pointsReward: 10,
+      orderInARG: 1,
+      createdAt: "2023-01-07T14:00:00Z",
+      arg: { id: "c7e8f9a0-b1c2-d3e4-f5a6-7b8c9d0e1f2a" }
+    },
+    {
+      id: "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+      title: "The Shadow's Puzzle",
+      problemDescription: "What has an eye, but cannot see?",
+      correctAnswer: "A needle",
+      hint: "It's a common household item.",
+      difficultyLevel: "Medium",
+      pointsReward: 20,
+      orderInARG: 2,
+      createdAt: "2023-01-08T15:00:00Z",
+      arg: { id: "c7e8f9a0-b1c2-d3e4-f5a6-7b8c9d0e1f2a" }
+    },
+    {
+      id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      title: "The Cybernetic Knot",
+      problemDescription: "I am always hungry, I must always be fed, the finger I touch, will soon turn red. What am I?",
+      correctAnswer: "Fire",
+      hint: "It consumes.",
+      difficultyLevel: "Hard",
+      pointsReward: 30,
+      orderInARG: 1,
+      createdAt: "2023-01-09T16:00:00Z",
+      arg: { id: "d8f9a0b1-c2d3-e4f5-a6b7-c8d9e0f1a2b3" }
+    }
+  ])
+  solution_insertMany(data: [
+    {
+      id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+      submittedAnswer: "An echo",
+      isCorrect: true,
+      timeTaken: 60,
+      createdAt: "2023-01-10T17:00:00Z",
+      user: { id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11" },
+      riddle: { id: "e9f0a1b2-c3d4-e5f6-a7b8-c9d0e1f2a3b4" }
+    },
+    {
+      id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+      submittedAnswer: "A needle",
+      isCorrect: false,
+      timeTaken: 120,
+      createdAt: "2023-01-11T18:00:00Z",
+      user: { id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11" },
+      riddle: { id: "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5" }
+    },
+    {
+      id: "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
+      submittedAnswer: "Fire",
+      isCorrect: true,
+      timeTaken: 90,
+      createdAt: "2023-01-12T19:00:00Z",
+      user: { id: "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e" },
+      riddle: { id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" }
+    }
+  ])
+  comment_insertMany(data: [
+    {
+      id: "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b",
+      content: "Great riddle!",
+      isHint: false,
+      createdAt: "2023-01-13T20:00:00Z",
+      user: { id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11" },
+      riddle: { id: "e9f0a1b2-c3d4-e5f6-a7b8-c9d0e1f2a3b4" }
+    },
+    {
+      id: "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c",
+      content: "This one was tricky!",
+      isHint: false,
+      createdAt: "2023-01-14T21:00:00Z",
+      user: { id: "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e" },
+      riddle: { id: "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5" }
+    }
+  ])
+}
