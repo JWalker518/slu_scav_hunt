@@ -19,3 +19,7 @@
 
 * Do not make changes to any file yet, but please list the changes you would make to requirements.md
 
+### March 11th
+* Please continue to Step 2.1 in requirements.md, while adhering to the AI guidelines and the step information itself.
+
+
