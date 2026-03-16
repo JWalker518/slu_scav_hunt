@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:slu_scav_hunt/services/hunt_service.dart';
-import 'package:slu_scav_hunt/models/hunt.dart';
 
 void main() {
   group('HuntService Test', () {

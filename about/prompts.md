@@ -28,5 +28,6 @@
 
 * Please continue to step 2.3
 
+* Please familiarize yourself with the code again
 
-
+* Continue to step 2.4

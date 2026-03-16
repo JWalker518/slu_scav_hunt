@@ -48,6 +48,18 @@ Please continue to Step 2.3
 - **`test/services/hunt_service_test.dart`**: Created unit tests for the `HuntService` using `fake_cloud_firestore`.
 - **`pubspec.yaml`**: Added `fake_cloud_firestore` to `dev_dependencies` for robust testing.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Continued
+
+### Prompt:
+Continue to step 2.4
+
+### Added
+- **`lib/providers/hunt_providers.dart`**: Implemented `huntServiceProvider`, `searchQueryProvider` (using `NotifierProvider`), and `huntsProvider` (using `StreamProvider`) for reactive state management.
+- **`test/providers/hunt_providers_test.dart`**: Created unit tests for the providers, verifying they correctly provide and filter data from the service.
+
+### Changed
+- **`about/requirements.md`**: Marked Step 2.4 as complete.
+
 ### Changed
 - **`about/requirements.md`**: Marked Step 2.3 as complete.
 

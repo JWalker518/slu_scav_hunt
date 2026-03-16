@@ -52,7 +52,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
         - Implement HuntService in lib/services/hunt_service.dart.
         - Add logic to fetch a stream or list of available hunts from the "hunts" collection in Firestore.
 
-    [ ] Step 2.4: State Management (Providers)
+    [x] Step 2.4: State Management (Providers)
         - Create a huntsProvider (StreamProvider) in lib/providers/hunt_providers.dart to expose the hunt list.
         - Add a searchQueryProvider (StateProvider) to handle real-time filtering of the list.
 
