@@ -57,6 +57,19 @@ Continue to step 2.4
 - **`lib/providers/hunt_providers.dart`**: Implemented `huntServiceProvider`, `searchQueryProvider` (using `NotifierProvider`), and `huntsProvider` (using `StreamProvider`) for reactive state management.
 - **`test/providers/hunt_providers_test.dart`**: Created unit tests for the providers, verifying they correctly provide and filter data from the service.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Continued
+
+### Prompt:
+Proceed to step 2.5
+
+### Added
+- **`lib/screens/discovery_screen.dart`**: Implemented `HuntDiscoveryScreen` with a search bar and reactive hunt list using `AsyncValue.when()`.
+- **`test/screens/discovery_screen_test.dart`**: Created widget tests for `HuntDiscoveryScreen` covering loading, empty, and data states.
+
+### Changed
+- **`lib/main.dart`**: Replaced placeholder `HomeScreen` with `HuntDiscoveryScreen`.
+- **`about/requirements.md`**: Marked Step 2.5 as complete and updated Step 2.4 to reference `NotifierProvider`.
+
 ### Changed
 - **`about/requirements.md`**: Marked Step 2.4 as complete.
 

@@ -31,3 +31,7 @@
 * Please familiarize yourself with the code again
 
 * Continue to step 2.4
+
+* Since riverpod has updated, make sure all previous instances of riverpod are updated to the current version as to not introduce unwanted bugs
+
+* Proceed to step 2.5

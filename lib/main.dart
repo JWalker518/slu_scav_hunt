@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:slu_scav_hunt/firebase_options.dart';
 import 'package:slu_scav_hunt/theme.dart';
+import 'package:slu_scav_hunt/screens/discovery_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,26 +30,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hunt'),
-      ),
-      body: const Center(
-        child: Text(
-          'Welcome to the Hunt App!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      home: const HuntDiscoveryScreen(),
     );
   }
 }

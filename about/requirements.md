@@ -54,9 +54,9 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
 
     [x] Step 2.4: State Management (Providers)
         - Create a huntsProvider (StreamProvider) in lib/providers/hunt_providers.dart to expose the hunt list.
-        - Add a searchQueryProvider (StateProvider) to handle real-time filtering of the list.
+        - Add a searchQueryProvider (NotifierProvider) to handle real-time filtering of the list.
 
-    [ ] Step 2.5: Discovery Screen UI
+    [x] Step 2.5: Discovery Screen UI
         - Create HuntDiscoveryScreen in lib/screens/discovery_screen.dart.
         - Use a ListView.builder or GridView to display hunts.
         - Implement AsyncValue.when() to handle loading and error states gracefully.
