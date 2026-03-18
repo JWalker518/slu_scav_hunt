@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
+
+      // Link to list of hunts 
       home: const HuntDiscoveryScreen(),
     );
   }

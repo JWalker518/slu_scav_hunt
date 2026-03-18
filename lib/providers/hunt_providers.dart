@@ -26,6 +26,9 @@ final huntsProvider = StreamProvider<List<Hunt>>((ref) {
   final huntService = ref.watch(huntServiceProvider);
   final searchQuery = ref.watch(searchQueryProvider);
   
+
+  // Had some trouble connecting to Firebase, so this was a test in the console so that I could see if it was a code error 
+  // or a firebase error
   // Adding a timeout ensures that if Firestore hangs, we see an error instead of a freeze.
   return huntService.searchHunts(searchQuery).timeout(
     const Duration(seconds: 10),

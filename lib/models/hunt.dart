@@ -10,6 +10,7 @@ class Hunt {
   final GeoPoint coordinates;
   final String riddle;
 
+  // Initialize the instance data
   Hunt({
     required this.id,
     required this.title,
@@ -25,10 +26,12 @@ class Hunt {
   factory Hunt.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
     
+    // If nothing was entered
     if (data == null) {
       throw Exception("Document data was null for Hunt ID: ${doc.id}");
     }
 
+    // Convert entered data into the hunt model to be used
     return Hunt(
       id: doc.id,
       title: data['title']?.toString() ?? 'Untitled Hunt',

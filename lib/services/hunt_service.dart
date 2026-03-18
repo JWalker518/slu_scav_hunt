@@ -7,7 +7,8 @@ class HuntService {
   HuntService({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  /// Returns a stream of all hunts in the 'hunts' collection
+  
+  // Returns a stream of all hunts in the 'hunts' collection
   Stream<List<Hunt>> getHunts() {
     print('HuntService: Requesting hunts stream...');
     return _firestore
@@ -26,8 +27,7 @@ class HuntService {
         });
   }
 
-  /// Optional: Fetch hunts filtered by a query (e.g., for search)
-  /// This will be useful for Step 2.4
+  // Fetch hunts filtered by a query (e.g., for search)
   Stream<List<Hunt>> searchHunts(String query) {
     if (query.isEmpty) return getHunts();
     

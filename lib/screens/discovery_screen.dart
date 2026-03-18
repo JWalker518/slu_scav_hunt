@@ -10,14 +10,17 @@ class HuntDiscoveryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final huntsAsync = ref.watch(huntsProvider);
 
+    // The menu bar on the top of the screen
     return Scaffold(
       appBar: AppBar(
+        // The 'Hunt' title
         title: const Text('Discover Hunts'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              // The Search Bar background text
               decoration: InputDecoration(
                 hintText: 'Search hunts...',
                 prefixIcon: const Icon(Icons.search),
@@ -45,20 +48,25 @@ class HuntDiscoveryScreen extends ConsumerWidget {
     );
   }
 
+
   Widget _buildHuntList(List<Hunt> hunts) {
+
+    // When searching, return a message if no hunts are found
     if (hunts.isEmpty) {
       return const Center(
         child: Text('No hunts found. Try a different search!'),
       );
     }
 
+    // The list of hunts to be presented on the homepage
     return ListView.builder(
       itemCount: hunts.length,
       padding: const EdgeInsets.all(8),
       itemBuilder: (context, index) {
         final hunt = hunts[index];
-        // Note: For now we use a simple ListTile. 
+
         // Step 2.6 will involve creating a custom HuntCard widget.
+        // The card presenting the hunt on the homepage
         return Card(
           child: ListTile(
             title: Text(hunt.title),
