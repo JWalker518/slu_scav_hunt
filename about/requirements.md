@@ -61,7 +61,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
         - Use a ListView.builder or GridView to display hunts.
         - Implement AsyncValue.when() to handle loading and error states gracefully.
 
-    [ ] Step 2.6: Hunt Card Widget
+    [x] Step 2.6: Hunt Card Widget
         - Extract the hunt item UI into a dedicated HuntCard in lib/widgets/hunt_card.dart.
         - Include visual indicators for difficulty, estimated time, or user ratings.
 

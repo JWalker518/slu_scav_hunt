@@ -39,3 +39,5 @@
 * Line 11 in discovery_screen.dart seems to be catching an error currently, could you piece together what this error could be about?
 
 * The app still freezes when loading in.  It gets stuck on the spinning wheel icon and VSCode highlights line 11 in discovery_screen.dart "final huntsAsync = ref.watch(huntsProvider);"  Please discuss what the issue may be here.
+
+* Please continue to step 2.6

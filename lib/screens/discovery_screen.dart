@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slu_scav_hunt/providers/hunt_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
+import 'package:slu_scav_hunt/widgets/hunt_card.dart';
 
 class HuntDiscoveryScreen extends ConsumerWidget {
   const HuntDiscoveryScreen({super.key});
@@ -65,23 +66,12 @@ class HuntDiscoveryScreen extends ConsumerWidget {
       itemBuilder: (context, index) {
         final hunt = hunts[index];
 
-        // Step 2.6 will involve creating a custom HuntCard widget.
         // The card presenting the hunt on the homepage
-        return Card(
-          child: ListTile(
-            title: Text(hunt.title),
-            subtitle: Text(hunt.description),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.star, color: Colors.amber, size: 20),
-                Text(hunt.rating.toString()),
-              ],
-            ),
-            onTap: () {
-              // Navigation will be implemented in Step 2.7
-            },
-          ),
+        return HuntCard(
+          hunt: hunt,
+          onTap: () {
+            // Navigation will be implemented in Step 2.7
+          },
         );
       },
     );

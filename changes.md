@@ -66,6 +66,19 @@ Proceed to step 2.5
 - **`lib/screens/discovery_screen.dart`**: Implemented `HuntDiscoveryScreen` with a search bar and reactive hunt list using `AsyncValue.when()`.
 - **`test/screens/discovery_screen_test.dart`**: Created widget tests for `HuntDiscoveryScreen` covering loading, empty, and data states.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Continued
+
+### Prompt:
+Please continue to step 2.6
+
+### Added
+- **`lib/widgets/hunt_card.dart`**: Created a polished `HuntCard` widget to display hunt details (title, description, rating, difficulty).
+- **`test/widgets/hunt_card_test.dart`**: Created a widget test to verify `HuntCard` displays information correctly.
+
+### Changed
+- **`lib/screens/discovery_screen.dart`**: Integrated `HuntCard` into the hunt list.
+- **`about/requirements.md`**: Marked Step 2.6 as complete.
+
 ### Changed
 - **`lib/main.dart`**: Replaced placeholder `HomeScreen` with `HuntDiscoveryScreen`.
 - **`about/requirements.md`**: Marked Step 2.5 as complete and updated Step 2.4 to reference `NotifierProvider`.
