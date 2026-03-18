@@ -142,6 +142,8 @@ class HuntDetailScreen extends StatelessWidget {
     );
   }
 
+
+  // Stores difficulty color selections
   Widget _buildDifficultyChip(String difficulty) {
     Color chipColor;
     switch (difficulty.toLowerCase()) {
@@ -154,6 +156,7 @@ class HuntDetailScreen extends StatelessWidget {
       default:
         chipColor = Colors.orange;
     }
+
 
     return Chip(
       label: Text(
