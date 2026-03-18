@@ -105,19 +105,6 @@ class HuntDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 32),
-
-            // Location Info
-            Row(
-              children: [
-                const Icon(Icons.location_on, color: Colors.grey),
-                const SizedBox(width: 8),
-                Text(
-                  'Coordinates: ${hunt.coordinates.latitude.toStringAsFixed(4)}, ${hunt.coordinates.longitude.toStringAsFixed(4)}',
-                  style: theme.textTheme.bodyMedium,
-                ),
-              ],
-            ),
             const SizedBox(height: 40),
 
             // Action Button

@@ -86,6 +86,8 @@ Please proceed to step 2.7
 
 ### Changed
 - **`lib/screens/discovery_screen.dart`**: Implemented navigation to `HuntDetailScreen` when a `HuntCard` is tapped.
+- **`lib/screens/hunt_detail_screen.dart`**: Removed coordinate display from the detail view to preserve gameplay mystery.
+- **`test/screens/hunt_detail_screen_test.dart`**: Updated test to verify coordinates are no longer visible.
 - **`about/requirements.md`**: Marked Step 2.7 as complete, finalizing Phase 2.
 
 ### Changed

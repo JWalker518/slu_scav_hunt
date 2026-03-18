@@ -29,5 +29,9 @@ void main() {
     expect(find.text('Created by James'), findsOneWidget);
     expect(find.text('MEDIUM'), findsOneWidget);
     expect(find.text('START HUNT'), findsOneWidget);
+
+    // Verify coordinates are NOT shown for gameplay integrity
+    expect(find.textContaining('Coordinates'), findsNothing);
+    expect(find.byIcon(Icons.location_on), findsNothing);
   });
 }

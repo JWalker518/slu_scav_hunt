@@ -43,3 +43,5 @@
 * Please continue to step 2.6
 
 * Please proceed to step 2.7
+
+* Realistically, we wouldn't want to show the coordinates on the hunt card screen since we want the user to have to find those coordinates themselves.  Please adjust the hunt detail screen so that the coordinates aren't visible to the user who may want to start that hunt.
