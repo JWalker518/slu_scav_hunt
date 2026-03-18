@@ -75,6 +75,19 @@ Please continue to step 2.6
 - **`lib/widgets/hunt_card.dart`**: Created a polished `HuntCard` widget to display hunt details (title, description, rating, difficulty).
 - **`test/widgets/hunt_card_test.dart`**: Created a widget test to verify `HuntCard` displays information correctly.
 
+## [2026-03-11] - Phase 2: Milestone 1 - Hunt Discovery (The MVP Feed) - Finalized
+
+### Prompt:
+Please proceed to step 2.7
+
+### Added
+- **`lib/screens/hunt_detail_screen.dart`**: Implemented a detailed view for hunts, including full description, riddle, and "Start Hunt" placeholder.
+- **`test/screens/hunt_detail_screen_test.dart`**: Created a widget test to verify `HuntDetailScreen` displays all details correctly.
+
+### Changed
+- **`lib/screens/discovery_screen.dart`**: Implemented navigation to `HuntDetailScreen` when a `HuntCard` is tapped.
+- **`about/requirements.md`**: Marked Step 2.7 as complete, finalizing Phase 2.
+
 ### Changed
 - **`lib/screens/discovery_screen.dart`**: Integrated `HuntCard` into the hunt list.
 - **`about/requirements.md`**: Marked Step 2.6 as complete.

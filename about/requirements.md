@@ -65,7 +65,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
         - Extract the hunt item UI into a dedicated HuntCard in lib/widgets/hunt_card.dart.
         - Include visual indicators for difficulty, estimated time, or user ratings.
 
-    [ ] Step 2.7: Navigation & Details
+    [x] Step 2.7: Navigation & Details
         - Create a HuntDetailScreen in lib/screens/hunt_detail_screen.dart.
         - Set up navigation so tapping a card takes the user to the full description and "Start Hunt" button.
 

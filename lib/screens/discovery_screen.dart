@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slu_scav_hunt/providers/hunt_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/widgets/hunt_card.dart';
+import 'package:slu_scav_hunt/screens/hunt_detail_screen.dart';
 
 class HuntDiscoveryScreen extends ConsumerWidget {
   const HuntDiscoveryScreen({super.key});
@@ -70,7 +71,12 @@ class HuntDiscoveryScreen extends ConsumerWidget {
         return HuntCard(
           hunt: hunt,
           onTap: () {
-            // Navigation will be implemented in Step 2.7
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HuntDetailScreen(hunt: hunt),
+              ),
+            );
           },
         );
       },
