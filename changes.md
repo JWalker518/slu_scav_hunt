@@ -90,6 +90,19 @@ Please proceed to step 2.7
 - **`test/screens/hunt_detail_screen_test.dart`**: Updated test to verify coordinates are no longer visible.
 - **`about/requirements.md`**: Marked Step 2.7 as complete, finalizing Phase 2.
 
+## [2026-03-11] - Phase 3: Authentication & Identity
+
+### Prompt:
+I think we're ready. Time to begin Phase 3... Please proceed with step 3.1.
+
+### Added
+- **Dependencies**: Added `google_sign_in: ^6.2.1` and `mocktail: ^1.0.4` to `pubspec.yaml` for authentication and testing.
+- **`lib/services/auth_service.dart`**: Created `AuthService` handling Email/Password, Google Sign-In, and password reset via `firebase_auth`.
+- **`test/services/auth_service_test.dart`**: Created comprehensive unit tests using `mocktail` to verify `AuthService` behavior.
+
+### Changed
+- **`about/requirements.md`**: Marked Step 3.1 as complete.
+
 ### Changed
 - **`lib/screens/discovery_screen.dart`**: Integrated `HuntCard` into the hunt list.
 - **`about/requirements.md`**: Marked Step 2.6 as complete.

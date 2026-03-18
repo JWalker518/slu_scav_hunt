@@ -72,7 +72,7 @@ Goal: Establish the core "Hunt Discovery" feed using live Firestore data. This f
 Phase 3: Authentication & Identity
 Goal: Secure the application and provide personalized user experiences.
 
-    [ ] Step 3.1: Firebase Authentication Service
+    [x] Step 3.1: Firebase Authentication Service
         - Implement AuthService with at least two providers (Email/Password AND Google Sign-In).
         - Include password reset logic.
 
