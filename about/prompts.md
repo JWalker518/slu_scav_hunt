@@ -40,8 +40,12 @@
 
 * The app still freezes when loading in.  It gets stuck on the spinning wheel icon and VSCode highlights line 11 in discovery_screen.dart "final huntsAsync = ref.watch(huntsProvider);"  Please discuss what the issue may be here.
 
+
+### March 18th
 * Please continue to step 2.6
 
 * Please proceed to step 2.7
 
 * Realistically, we wouldn't want to show the coordinates on the hunt card screen since we want the user to have to find those coordinates themselves.  Please adjust the hunt detail screen so that the coordinates aren't visible to the user who may want to start that hunt.
+
+* The test we created for when the loading froze due to the firebase connection appears to be causing the app to buffer every ten seconds. Can you please remove that test as we no longer need it so that our page doesn't buffers? 

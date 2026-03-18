@@ -10,20 +10,11 @@ class HuntService {
   
   // Returns a stream of all hunts in the 'hunts' collection
   Stream<List<Hunt>> getHunts() {
-    print('HuntService: Requesting hunts stream...');
     return _firestore
         .collection('hunts')
         .snapshots()
         .map((snapshot) {
-          print('HuntService: Received snapshot with ${snapshot.docs.length} documents');
-          return snapshot.docs.map((doc) {
-            try {
-              return Hunt.fromFirestore(doc);
-            } catch (e) {
-              print('HuntService: Error parsing document ${doc.id}: $e');
-              rethrow;
-            }
-          }).toList();
+          return snapshot.docs.map((doc) => Hunt.fromFirestore(doc)).toList();
         });
   }
 
