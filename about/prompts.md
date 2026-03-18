@@ -35,3 +35,7 @@
 * Since riverpod has updated, make sure all previous instances of riverpod are updated to the current version as to not introduce unwanted bugs
 
 * Proceed to step 2.5
+
+* Line 11 in discovery_screen.dart seems to be catching an error currently, could you piece together what this error could be about?
+
+* The app still freezes when loading in.  It gets stuck on the spinning wheel icon and VSCode highlights line 11 in discovery_screen.dart "final huntsAsync = ref.watch(huntsProvider);"  Please discuss what the issue may be here.

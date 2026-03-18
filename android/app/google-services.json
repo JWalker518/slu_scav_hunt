@@ -12,7 +12,12 @@
           "package_name": "com.example.slu_scav_hunt"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "266549713751-cdcg5k3r2j8i99cveu1ta6n35t6sivca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB7DrNlrlVMYDNfx6JvOPFdrNWUQ_I0yK8"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266549713751-cdcg5k3r2j8i99cveu1ta6n35t6sivca.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "266549713751-98v5mc9tsoi0ql37f5733ombelph53ub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sluScavHunt"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/hunt.dart';
-import '../services/hunt_service.dart';
+import 'package:slu_scav_hunt/models/hunt.dart';
+import 'package:slu_scav_hunt/services/hunt_service.dart';
 
 /// Provider for the HuntService
 final huntServiceProvider = Provider<HuntService>((ref) {
@@ -26,5 +26,12 @@ final huntsProvider = StreamProvider<List<Hunt>>((ref) {
   final huntService = ref.watch(huntServiceProvider);
   final searchQuery = ref.watch(searchQueryProvider);
   
-  return huntService.searchHunts(searchQuery);
+  // Adding a timeout ensures that if Firestore hangs, we see an error instead of a freeze.
+  return huntService.searchHunts(searchQuery).timeout(
+    const Duration(seconds: 10),
+    onTimeout: (sink) {
+      print('huntsProvider: Stream timed out after 10 seconds');
+      sink.addError('Connection timed out. Please check your Firestore setup and internet connection.');
+    },
+  );
 });

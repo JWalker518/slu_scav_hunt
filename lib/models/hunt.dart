@@ -23,17 +23,30 @@ class Hunt {
 
   /// Create a Hunt object from a Firestore document
   factory Hunt.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    final Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+    
+    if (data == null) {
+      throw Exception("Document data was null for Hunt ID: ${doc.id}");
+    }
+
     return Hunt(
       id: doc.id,
-      title: data['title'] ?? '',
-      description: data['description'] ?? '',
-      creatorName: data['creatorName'] ?? '',
-      difficulty: data['difficulty'] ?? '',
-      rating: (data['rating'] ?? 0.0).toDouble(),
-      coordinates: data['coordinates'] ?? const GeoPoint(0, 0),
-      riddle: data['riddle'] ?? '',
+      title: data['title']?.toString() ?? 'Untitled Hunt',
+      description: data['description']?.toString() ?? 'No description available',
+      creatorName: data['creatorName']?.toString() ?? 'Anonymous',
+      difficulty: data['difficulty']?.toString() ?? 'Normal',
+      rating: _toDouble(data['rating']),
+      coordinates: data['coordinates'] is GeoPoint 
+          ? data['coordinates'] as GeoPoint 
+          : const GeoPoint(0, 0),
+      riddle: data['riddle']?.toString() ?? 'No riddle provided',
     );
+  }
+
+  /// Helper to safely convert Firestore numbers (which might be int or double) to double
+  static double _toDouble(dynamic value) {
+    if (value is num) return value.toDouble();
+    return 0.0;
   }
 
   /// Convert a Hunt object into a Map for Firestore storage

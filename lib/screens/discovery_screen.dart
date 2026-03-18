@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/hunt_providers.dart';
-import '../models/hunt.dart';
+import 'package:slu_scav_hunt/providers/hunt_providers.dart';
+import 'package:slu_scav_hunt/models/hunt.dart';
 
 class HuntDiscoveryScreen extends ConsumerWidget {
   const HuntDiscoveryScreen({super.key});

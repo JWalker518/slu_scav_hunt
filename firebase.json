@@ -1,1 +1,29 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"slu-scav-hunt","appId":"1:266549713751:android:50ec1f285dd53974b73c12","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"slu-scav-hunt","configurations":{"android":"1:266549713751:android:50ec1f285dd53974b73c12","ios":"1:266549713751:ios:e7f6a22e88d93778b73c12","macos":"1:266549713751:ios:e7f6a22e88d93778b73c12","web":"1:266549713751:web:1562331e1eb48ff9b73c12","windows":"1:266549713751:web:8619a185ff97a24cb73c12"}}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "slu-scav-hunt",
+          "appId": "1:266549713751:android:50ec1f285dd53974b73c12",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "slu-scav-hunt",
+          "configurations": {
+            "android": "1:266549713751:android:50ec1f285dd53974b73c12",
+            "ios": "1:266549713751:ios:e7f6a22e88d93778b73c12",
+            "macos": "1:266549713751:ios:e7f6a22e88d93778b73c12",
+            "web": "1:266549713751:web:1562331e1eb48ff9b73c12",
+            "windows": "1:266549713751:web:8619a185ff97a24cb73c12"
+          }
+        }
+      }
+    }
+  }
+}

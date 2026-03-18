@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/hunt.dart';
+import 'package:slu_scav_hunt/models/hunt.dart';
 
 class HuntService {
   final FirebaseFirestore _firestore;
@@ -9,11 +9,20 @@ class HuntService {
 
   /// Returns a stream of all hunts in the 'hunts' collection
   Stream<List<Hunt>> getHunts() {
+    print('HuntService: Requesting hunts stream...');
     return _firestore
         .collection('hunts')
         .snapshots()
         .map((snapshot) {
-          return snapshot.docs.map((doc) => Hunt.fromFirestore(doc)).toList();
+          print('HuntService: Received snapshot with ${snapshot.docs.length} documents');
+          return snapshot.docs.map((doc) {
+            try {
+              return Hunt.fromFirestore(doc);
+            } catch (e) {
+              print('HuntService: Error parsing document ${doc.id}: $e');
+              rethrow;
+            }
+          }).toList();
         });
   }
 
