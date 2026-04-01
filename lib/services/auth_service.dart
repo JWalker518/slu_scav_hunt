@@ -4,12 +4,20 @@ import 'package:google_sign_in/google_sign_in.dart' as gsign;
 class AuthService {
   final FirebaseAuth _auth;
   final gsign.GoogleSignIn _googleSignIn;
+  bool _isGoogleSignInInitialized = false;
 
   AuthService({
     FirebaseAuth? auth,
     gsign.GoogleSignIn? googleSignIn,
   })  : _auth = auth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? gsign.GoogleSignIn();
+        _googleSignIn = googleSignIn ?? gsign.GoogleSignIn.instance;
+
+  Future<void> _ensureGoogleSignInInitialized() async {
+    if (!_isGoogleSignInInitialized) {
+      await _googleSignIn.initialize();
+      _isGoogleSignInInitialized = true;
+    }
+  }
 
   /// Stream of user authentication state changes
   Stream<User?> get authStateChanges => _auth.authStateChanges();
@@ -46,28 +54,25 @@ class AuthService {
   /// Sign in with Google
   Future<UserCredential?> signInWithGoogle() async {
     try {
+      await _ensureGoogleSignInInitialized();
       // Trigger the authentication flow
-      final gsign.GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      if (googleUser == null) {
-        // The user canceled the sign-in
-        return null;
-      }
+      final gsign.GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
       // Obtain the auth details from the request
-      final gsign.GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final gsign.GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final gsign.GoogleSignInClientAuthorization? authorization = await googleUser.authorizationClient.authorizationForScopes([]);
 
       // Create a new credential
       final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
+        accessToken: authorization?.accessToken,
         idToken: googleAuth.idToken,
       );
 
       // Once signed in, return the UserCredential
       return await _auth.signInWithCredential(credential);
     } catch (e) {
-      rethrow;
+      // If the user cancels the sign-in or it fails, it will throw an exception.
+      return null;
     }
   }
 

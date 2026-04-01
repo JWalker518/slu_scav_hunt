@@ -51,3 +51,6 @@
 * The test we created for when the loading froze due to the firebase connection appears to be causing the app to buffer every ten seconds. Can you please remove that test as we no longer need it so that our page doesn't buffers? 
 
 * I think we're ready. Time to begin Phase 3... Please proceed with step 3.1.
+
+### March 31st
+* Please update any necessary files with up to date code
