@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
+import 'package:slu_scav_hunt/screens/hunt_gameplay_screen.dart';
 
 class HuntDetailScreen extends StatelessWidget {
   final Hunt hunt;
@@ -113,8 +114,11 @@ class HuntDetailScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Hunt gameplay will be implemented in Phase 4!')),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HuntGameplayScreen(hunt: hunt),
+                    ),
                   );
                 },
                 child: const Text(

@@ -64,3 +64,18 @@
 
 * First, the 'sign in with google' option returns the error message "failed to sign in with google', and secondly, trying to log out using the log out button prompts the app to freeze.
 
+* The issues with logging out and signing in with google still exist, but we can fix them after establishing the app's functionability.  So, please begin Phase 4 step 4.1.
+
+* Where would I find this api key
+
+* What should I input as my restriction type, and my SHA-1 finger certificate
+
+* What if I just choose website instead for my restriction type
+
+* Please check each of my files in slu_scav_hunt folder for any api keys, and make sure those files are in the .gitignore file so that they will not be committed and pushed
+
+* I've enabled my api by choosing the API restriction option and then choosing the APIs' Maps SDK for Android and Maps SDK for IOS, so how should I proceed with previewing my APIs
+
+* Selecting the "Start Hunt" button works, and the app asks for my location, but once I select 'allow' I am brought to an error screen stating "TypeError: Cannot read properties of undefined (reading 'MapTypeid') See also: https://docs.flutter.dev/testing/errors"
+
+* Please remember to git commit and push with a descriptive comment before making any changes to the code

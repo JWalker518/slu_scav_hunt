@@ -84,7 +84,7 @@ Goal: Secure the application and provide personalized user experiences.
 Phase 4: GPS Service & Hunt Creation
 Goal: Implement the core GPS features allowing users to create and participate in geo-specific hunts.
 
-    [ ] Step 4.1: Maps Integration
+    [x] Step 4.1: Maps Integration
         - Integrate Google Maps for selecting target locations during creation and visual guidance during the hunt.
         - Implement Geofencing to automatically trigger "Correct!" when a user enters the designated area.
 

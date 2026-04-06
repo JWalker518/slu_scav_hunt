@@ -154,3 +154,22 @@ Please update any necessary files with up to date code
 - **`test/services/auth_service_test.dart`**: Updated unit tests to match the new 7.2.0 API and added `isTest: true` to bypass platform checks during testing.
 - **`lib/main.dart`**: Replaced `HuntDiscoveryScreen` with `AuthGate` as the default home widget to properly enforce authentication.
 - **`about/requirements.md`**: Marked Step 3.2 as complete.
+
+## [2026-04-05] - Phase 4: GPS Service & Hunt Creation
+
+### Prompt:
+The issues with logging out and signing in with google still exist, but we can fix them after establishing the app's functionability. So, please begin Phase 4 step 4.1.
+
+### Added
+- **Dependencies**: Added `google_maps_flutter: ^2.10.0` and `geolocator: ^13.0.2` to `pubspec.yaml`.
+- **`lib/services/location_service.dart`**: Implemented `LocationService` to handle permissions, current location, and distance calculations.
+- **`lib/providers/location_providers.dart`**: Created Riverpod providers for `LocationService`, current position, and location stream.
+- **`lib/screens/hunt_gameplay_screen.dart`**: Created the gameplay screen featuring a Google Map, real-time location tracking, and distance-based geofencing to trigger hunt completion.
+- **`lib/screens/map_picker_screen.dart`**: Created a map selection screen to allow users to pick target coordinates on a map.
+- **`test/services/location_service_test.dart`**: Added unit tests for distance calculation logic.
+
+### Changed
+- **`android/app/src/main/AndroidManifest.xml`**: Added `ACCESS_FINE_LOCATION` and `ACCESS_COARSE_LOCATION` permissions and Google Maps API key metadata.
+- **`ios/Runner/Info.plist`**: Added `NSLocationWhenInUseUsageDescription` and `NSLocationAlwaysUsageDescription`.
+- **`lib/screens/hunt_detail_screen.dart`**: Updated the "START HUNT" button to navigate to the new `HuntGameplayScreen`.
+- **`about/requirements.md`**: Marked Step 4.1 as complete.
