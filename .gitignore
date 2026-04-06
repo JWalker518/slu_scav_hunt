@@ -49,5 +49,6 @@ pubspec.lock
 
 lib/firebase_options.dart
 android/app/google-services.json
-android/app/google-services.json
 android/app/src/main/AndroidManifest.xml
+ios/Runner/AppDelegate.swift
+web/index.html
