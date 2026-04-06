@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/location_providers.dart';
 
@@ -15,7 +14,6 @@ class MapPickerScreen extends ConsumerStatefulWidget {
 
 class _MapPickerScreenState extends ConsumerState<MapPickerScreen> {
   LatLng? _selectedLocation;
-  GoogleMapController? _mapController;
 
   @override
   void initState() {
@@ -52,7 +50,6 @@ class _MapPickerScreenState extends ConsumerState<MapPickerScreen> {
                   target: initialLatLng,
                   zoom: 15,
                 ),
-                onMapCreated: (controller) => _mapController = controller,
                 onTap: (latLng) {
                   setState(() {
                     _selectedLocation = latLng;

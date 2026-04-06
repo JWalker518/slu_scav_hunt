@@ -88,9 +88,6 @@ class AuthService {
         return null;
       }
       
-      if (googleUser == null) {
-        return null; 
-      }
 
       // Obtain the auth details from the result (synchronous in 7.x)
       final googleAuth = googleUser.authentication;

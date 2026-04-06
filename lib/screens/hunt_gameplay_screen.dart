@@ -18,7 +18,6 @@ class HuntGameplayScreen extends ConsumerStatefulWidget {
 class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   bool _isCompleted = false;
-  double _distanceToTarget = double.infinity;
   static const double completionRadius = 30.0; // meters
 
   @override
@@ -60,7 +59,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
             left: 16,
             right: 16,
             child: Card(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(

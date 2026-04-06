@@ -115,7 +115,7 @@ void main() {
 
     test('signOut calls both GoogleSignIn and FirebaseAuth', () async {
       when(() => mockGoogleSignIn.signOut())
-          .thenAnswer((_) async => null);
+          .thenAnswer((_) async {});
       when(() => mockAuth.signOut())
           .thenAnswer((_) async {});
 
