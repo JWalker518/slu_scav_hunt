@@ -130,3 +130,27 @@ I have recently added firebase to this project, please familiarize yourself with
 
 ### Changed
 - **`about/requirements.md`**: Updated and restructured the implementation roadmap for Phase 2-5, and marked Phase 1 as complete.
+
+## [2026-04-05] - Phase 3: Authentication & Identity - Continued
+
+### Prompt:
+Please update any necessary files with up to date code
+
+### Added
+- **`lib/providers/auth_providers.dart`**: Implemented `authServiceProvider` and `authStateProvider` to expose authentication state to the app.
+- **`lib/screens/login_screen.dart`**: Created a login screen with Email/Password and Google Sign-in options.
+- **`lib/screens/registration_screen.dart`**: Created a registration screen for new user sign-ups.
+- **`lib/widgets/auth_gate.dart`**: Created the `AuthGate` widget to listen to auth state and route users to either `LoginScreen` or `HuntDiscoveryScreen`.
+- **`test/widgets/auth_gate_test.dart`**: Added widget tests for `AuthGate`.
+- **`test/screens/login_screen_test.dart`**: Added widget tests for `LoginScreen`.
+- **`test/screens/registration_screen_test.dart`**: Added widget tests for `RegistrationScreen`.
+
+### Added
+- **`lib/screens/discovery_screen.dart`**: Added a logout button to the `AppBar` that allows users to sign out via `AuthService`.
+
+### Changed
+- **`lib/services/auth_service.dart`**: Fixed Google Sign-In and Sign-Out implementation for `google_sign_in` 7.2.0. Implemented mandatory `initialize()`, switched to `authenticate()`, and updated token retrieval to use the new `authorizationClient.authorizeScopes()` flow. Added platform checks and an `isTest` flag to prevent crashes/freezes on Windows, where native Google Sign-In is not supported.
+- **`lib/screens/login_screen.dart`**: Updated Google Sign-In error handling to display the actual error message (e.g., "UnsupportedError" on Windows) to the user via a SnackBar.
+- **`test/services/auth_service_test.dart`**: Updated unit tests to match the new 7.2.0 API and added `isTest: true` to bypass platform checks during testing.
+- **`lib/main.dart`**: Replaced `HuntDiscoveryScreen` with `AuthGate` as the default home widget to properly enforce authentication.
+- **`about/requirements.md`**: Marked Step 3.2 as complete.

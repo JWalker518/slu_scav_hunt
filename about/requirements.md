@@ -76,7 +76,7 @@ Goal: Secure the application and provide personalized user experiences.
         - Implement AuthService with at least two providers (Email/Password AND Google Sign-In).
         - Include password reset logic.
 
-    [ ] Step 3.2: Auth UI & The Auth Gate
+    [x] Step 3.2: Auth UI & The Auth Gate
         - Create LoginScreen and RegistrationScreen.
         - Create an AuthGate widget that listens to the Firebase Auth state stream.
         - If user == null, show LoginScreen. Else, show the Discovery Screen.

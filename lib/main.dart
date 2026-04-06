@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:slu_scav_hunt/firebase_options.dart';
 import 'package:slu_scav_hunt/theme.dart';
-import 'package:slu_scav_hunt/screens/discovery_screen.dart';
+import 'package:slu_scav_hunt/widgets/auth_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
 
       // Link to list of hunts 
-      home: const HuntDiscoveryScreen(),
+      home: const AuthGate(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slu_scav_hunt/providers/hunt_providers.dart';
+import 'package:slu_scav_hunt/providers/auth_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/widgets/hunt_card.dart';
 import 'package:slu_scav_hunt/screens/hunt_detail_screen.dart';
@@ -17,6 +18,16 @@ class HuntDiscoveryScreen extends ConsumerWidget {
       appBar: AppBar(
         // The 'Hunt' title
         title: const Text('Discover Hunts'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              final authService = ref.read(authServiceProvider);
+              await authService.signOut();
+            },
+            tooltip: 'Logout',
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(

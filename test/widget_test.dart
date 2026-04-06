@@ -1,21 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slu_scav_hunt/main.dart';
-import 'package:slu_scav_hunt/screens/discovery_screen.dart';
+import 'package:slu_scav_hunt/widgets/auth_gate.dart';
+import 'package:slu_scav_hunt/providers/auth_providers.dart';
 
 void main() {
-  testWidgets('App should start and show Discovery Screen', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    // Note: We don't initialize Firebase here as it's handled in main(), 
-    // and for widget tests we usually override providers.
+  testWidgets('App should start and show AuthGate', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MyApp(),
+      ProviderScope(
+        overrides: [
+          authStateProvider.overrideWith((ref) => Stream.value(null)),
+        ],
+        child: const MyApp(),
       ),
     );
 
-    // Verify that the Discovery Screen is shown.
-    expect(find.byType(HuntDiscoveryScreen), findsOneWidget);
-    expect(find.text('Discover Hunts'), findsOneWidget);
+    expect(find.byType(AuthGate), findsOneWidget);
   });
 }

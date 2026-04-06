@@ -54,3 +54,13 @@
 
 ### March 31st
 * Please update any necessary files with up to date code
+
+### April 5th
+* Please update any necessary files with up to date code
+
+* Currently, we have the ability to log-in, but what if I'd like to log in as another user?  Could you please add for the ability to log out of the software?
+ 
+* The log-out function does not log the user out currently. On top of that, the 'sign in with Google' button does not prompt the user to do anything regarding a google sign-in. Please asses any changes that may need to be made to fix this.
+
+* First, the 'sign in with google' option returns the error message "failed to sign in with google', and secondly, trying to log out using the log out button prompts the app to freeze.
+
