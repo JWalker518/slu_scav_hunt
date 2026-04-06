@@ -79,3 +79,16 @@
 * Selecting the "Start Hunt" button works, and the app asks for my location, but once I select 'allow' I am brought to an error screen stating "TypeError: Cannot read properties of undefined (reading 'MapTypeid') See also: https://docs.flutter.dev/testing/errors"
 
 * Please remember to git commit and push with a descriptive comment before making any changes to the code
+
+* Don't return 'null' from a function with a return type of 'void'. Try removing the 'null'. In auth_service_test.dart line 118, col 27
+
+* The value of the field '_mapController' isn't used. Try removing the field, or using it. In map_picker_screen.dart line 17, col 24
+
+* Each time I select "start hunt," the map loads for a second and then an error occurs, stating "Oops! Something went wrong. This page didn't load google maps correctly. See the JavaScript console for technical details." Where is this JavaScript console, anad how do I fix this?
+
+* Im getting an "ApiTargetBlockedMapError", and also Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+
+* Where would I be able to locate the API key for the Maps JavaScript API
+
+### April 6th
+* 

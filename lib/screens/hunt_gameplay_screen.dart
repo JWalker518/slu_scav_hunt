@@ -46,7 +46,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
               },
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
-              // We don't show the target marker to keep it a mystery!
+              // We don't show the target marker to keep it a mystery
               markers: const {},
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
