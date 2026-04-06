@@ -33,22 +33,32 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
         children: [
           // The Map
           initialPositionAsync.when(
-            data: (initialPosition) => GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                target: initialPosition != null 
-                    ? LatLng(initialPosition.latitude, initialPosition.longitude)
-                    : LatLng(widget.hunt.coordinates.latitude, widget.hunt.coordinates.longitude),
-                zoom: 15,
-              ),
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              // We don't show the target marker to keep it a mystery
-              markers: const {},
-            ),
+            data: (initialPosition) {
+              final currentPos = positionAsync.value;
+              return GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: CameraPosition(
+                  target: initialPosition != null 
+                      ? LatLng(initialPosition.latitude, initialPosition.longitude)
+                      : LatLng(widget.hunt.coordinates.latitude, widget.hunt.coordinates.longitude),
+                  zoom: 15,
+                ),
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false, // We'll use our own FAB
+                // Explicitly add a marker for the user's location
+                markers: currentPos != null ? {
+                  Marker(
+                    markerId: const MarkerId('user_location'),
+                    position: LatLng(currentPos.latitude, currentPos.longitude),
+                    infoWindow: const InfoWindow(title: 'You are here'),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+                  ),
+                } : {},
+              );
+            },
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (err, stack) => Center(child: Text('Error: $err')),
           ),
@@ -124,6 +134,20 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final currentPos = positionAsync.value;
+          if (currentPos != null) {
+            final controller = await _controller.future;
+            controller.animateCamera(
+              CameraUpdate.newLatLng(
+                LatLng(currentPos.latitude, currentPos.longitude),
+              ),
+            );
+          }
+        },
+        child: const Icon(Icons.my_location),
       ),
     );
   }

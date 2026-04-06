@@ -172,4 +172,5 @@ The issues with logging out and signing in with google still exist, but we can f
 - **`android/app/src/main/AndroidManifest.xml`**: Added `ACCESS_FINE_LOCATION` and `ACCESS_COARSE_LOCATION` permissions and Google Maps API key metadata.
 - **`ios/Runner/Info.plist`**: Added `NSLocationWhenInUseUsageDescription` and `NSLocationAlwaysUsageDescription`.
 - **`lib/screens/hunt_detail_screen.dart`**: Updated the "START HUNT" button to navigate to the new `HuntGameplayScreen`.
+- **`lib/screens/hunt_gameplay_screen.dart`**: Added an explicit user location marker (azure color) and a FloatingActionButton to recenter the camera on the user's current position.
 - **`about/requirements.md`**: Marked Step 4.1 as complete.
