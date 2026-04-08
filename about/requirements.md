@@ -88,7 +88,7 @@ Goal: Implement the core GPS features allowing users to create and participate i
         - Integrate Google Maps for selecting target locations during creation and visual guidance during the hunt.
         - Implement Geofencing to automatically trigger "Correct!" when a user enters the designated area.
 
-    [ ] Step 4.2: Advanced Permissions
+    [x] Step 4.2: Advanced Permissions
         - Request foreground and background location access with proper UX handling.
 
     [ ] Step 4.3: Hunt Creation Flow

@@ -174,3 +174,13 @@ The issues with logging out and signing in with google still exist, but we can f
 - **`lib/screens/hunt_detail_screen.dart`**: Updated the "START HUNT" button to navigate to the new `HuntGameplayScreen`.
 - **`lib/screens/hunt_gameplay_screen.dart`**: Added an explicit user location marker (azure color) and a FloatingActionButton to recenter the camera on the user's current position.
 - **`about/requirements.md`**: Marked Step 4.1 as complete.
+
+### Added
+- **`lib/widgets/location_rationale_dialog.dart`**: Created a custom dialog to explain location data usage to users before triggering system permission prompts, ensuring a better user experience and compliance with platform guidelines.
+- **`test/widgets/location_rationale_dialog_test.dart`**: Added widget tests for the rationale dialog.
+
+### Changed
+- **`android/app/src/main/AndroidManifest.xml`**: Added `ACCESS_BACKGROUND_LOCATION` permission.
+- **`lib/services/location_service.dart`**: Enhanced to support background location permission requests and provided better abstraction for platform-specific permission logic.
+- **`lib/screens/hunt_detail_screen.dart`**: Integrated the `LocationRationaleDialog` into the "START HUNT" flow to provide a clear explanation of location usage before requesting permissions.
+- **`about/requirements.md`**: Marked Step 4.2 as complete.

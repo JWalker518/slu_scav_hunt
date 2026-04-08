@@ -91,4 +91,13 @@
 * Where would I be able to locate the API key for the Maps JavaScript API
 
 ### April 6th
+* Great, the map now works, but I can't determine my current location from the map. Let's add an icon that portrays the user's current location so they won't be confused
+
+* Lets proceed to step 4.2 in Phase 4
+
+* I want to test this web app by hosting it on firebase.  What are some precautions I should take to enure I don't accidentally deploy sensitive information online?
+
+### April 8th
+* After changing the rules, I get the error "[firebase_auth/requests-from-referer-http://localhost:53698-are-blocked.] Error" whenever I try loggin in or signing up with a new account
+
 * 

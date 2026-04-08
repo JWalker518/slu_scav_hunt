@@ -1,7 +1,9 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationService {
-  /// Check and request location permissions
+  /// Check and request location permissions (Foreground)
   Future<bool> handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -24,6 +26,34 @@ class LocationService {
     }
 
     return true;
+  }
+
+  /// Check and request background location permission
+  Future<bool> handleBackgroundLocationPermission() async {
+    if (kIsWeb) return false;
+
+    // Background location is only available if foreground is already granted
+    final hasForeground = await handleLocationPermission();
+    if (!hasForeground) return false;
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    
+    // On Android 10+, background location is a separate permission
+    if (Platform.isAndroid) {
+      if (permission != LocationPermission.always) {
+        // Requesting 'always' permission triggers the system background prompt
+        permission = await Geolocator.requestPermission();
+        return permission == LocationPermission.always;
+      }
+    } else if (Platform.isIOS) {
+      // iOS handling is slightly different but geolocator abstracts it
+      if (permission != LocationPermission.always) {
+        permission = await Geolocator.requestPermission();
+        return permission == LocationPermission.always;
+      }
+    }
+
+    return permission == LocationPermission.always;
   }
 
   /// Get current position

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/screens/hunt_gameplay_screen.dart';
+import 'package:slu_scav_hunt/widgets/location_rationale_dialog.dart';
+import 'package:slu_scav_hunt/providers/location_providers.dart';
 
-class HuntDetailScreen extends StatelessWidget {
+class HuntDetailScreen extends ConsumerWidget {
   final Hunt hunt;
 
   const HuntDetailScreen({super.key, required this.hunt});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -20,7 +23,7 @@ class HuntDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title and Rating
+            // ... [Same code as before for UI] ...
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,13 +116,38 @@ class HuntDetailScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HuntGameplayScreen(hunt: hunt),
-                    ),
+                onPressed: () async {
+                  final locationService = ref.read(locationServiceProvider);
+                  
+                  // 1. Show Rationale for Foreground Location
+                  final proceed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => const LocationRationaleDialog(),
                   );
+
+                  if (proceed == true) {
+                    final hasPermission = await locationService.handleLocationPermission();
+                    if (hasPermission) {
+                      // 2. (Optional) Show Rationale for Background Location
+                      // For now, we proceed to gameplay with foreground.
+                      // We can add a "Enable Background Tracking" toggle in settings later.
+                      
+                      if (context.mounted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HuntGameplayScreen(hunt: hunt),
+                          ),
+                        );
+                      }
+                    } else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Location permission is required to play.')),
+                        );
+                      }
+                    }
+                  }
                 },
                 child: const Text(
                   'START HUNT',
