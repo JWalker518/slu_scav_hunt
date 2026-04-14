@@ -91,10 +91,10 @@ Goal: Implement the core GPS features allowing users to create and participate i
     [x] Step 4.2: Advanced Permissions
         - Request foreground and background location access with proper UX handling.
 
-    [ ] Step 4.3: Hunt Creation Flow
+    [x] Step 4.3: Hunt Creation Flow
         - Implement the UI and logic for users to create their own hunts, including setting coordinates and riddles.
 
-    [ ] Step 4.4: Enhanced UX & Safety
+    [x] Step 4.4: Enhanced UX & Safety
         - Implement Clue/Hint System and Media Support (images/audio).
         - Add a Report Button for moderation and Privacy Zones to restrict hunt locations.
 

@@ -11,6 +11,7 @@ void main() {
       title: 'Detailed Hunt',
       description: 'Full description of the hunt.',
       creatorName: 'James',
+      creatorId: 'test-creator-id',
       difficulty: 'Medium',
       rating: 4.2,
       coordinates: const GeoPoint(44.0, -75.0),

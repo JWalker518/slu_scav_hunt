@@ -184,3 +184,45 @@ The issues with logging out and signing in with google still exist, but we can f
 - **`lib/services/location_service.dart`**: Enhanced to support background location permission requests and provided better abstraction for platform-specific permission logic.
 - **`lib/screens/hunt_detail_screen.dart`**: Integrated the `LocationRationaleDialog` into the "START HUNT" flow to provide a clear explanation of location usage before requesting permissions.
 - **`about/requirements.md`**: Marked Step 4.2 as complete.
+
+## [2026-04-06] - Phase 4: GPS Service & Hunt Creation - Continued
+
+### Prompt:
+For now, lets continue to step 4.3 in requirements.md
+
+### Added
+- **`lib/screens/hunt_creation_screen.dart`**: Created a new screen for users to create their own hunts. It includes a form for hunt details and integrates with `MapPickerScreen` for coordinate selection.
+- **`test/services/hunt_service_test.dart`**: Added a unit test for the `createHunt` method.
+
+### Changed
+- **`lib/models/hunt.dart`**: Added `creatorId` field to the `Hunt` model to support ownership checks and secure Firestore rules. Updated `fromFirestore` and `toMap` accordingly.
+- **`lib/services/hunt_service.dart`**: Added `createHunt(Hunt hunt)` method to save new hunts to Firestore.
+- **`lib/screens/discovery_screen.dart`**: Added a `FloatingActionButton` to navigate to the `HuntCreationScreen`.
+- **`test/models/hunt_test.dart`**, **`test/screens/discovery_screen_test.dart`**, **`test/screens/hunt_detail_screen_test.dart`**, **`test/widgets/hunt_card_test.dart`**: Updated all existing tests to include the required `creatorId` parameter in `Hunt` instantiations.
+- **`about/requirements.md`**: Marked Step 4.3 as complete.
+
+## [2026-04-14] - Phase 4: GPS Service & Hunt Creation - Finalized
+
+### Prompt:
+(Self-initiated implementation of Step 4.4)
+
+### Added
+- **`lib/services/privacy_service.dart`**: Created `PrivacyService` to define and check restricted "Privacy Zones" to prevent hunt creation in prohibited locations.
+- **`test/services/privacy_service_test.dart`**: Added unit tests for `PrivacyService`.
+
+### Changed
+- **`lib/services/location_service.dart`**: Fixed `handleLocationPermission` for Web by making the `isLocationServiceEnabled` check more robust (handling potential exceptions) and ensuring proper permission flow.
+- **`lib/services/auth_service.dart`**: Refactored `signOut` to be more robust, ensuring that a failure in Google Sign-Out (e.g., if initialization hangs or fails) does not prevent the user from being signed out of Firebase.
+- **`lib/providers/location_providers.dart`**: Updated `positionStreamProvider` to be an `async*` stream that explicitly checks for permissions before yielding the position stream, preventing crashes/blocks on web.
+- **`lib/models/hunt.dart`**: Added `hints` (List<String>) and `imageUrl` (String?) fields to support clue systems and media. Updated `fromFirestore` and `toMap` accordingly.
+- **`lib/screens/hunt_creation_screen.dart`**:
+    - Added UI for adding multiple hints.
+    - Added an optional image URL field.
+    - Integrated `PrivacyService` to block hunt creation in restricted zones.
+- **`lib/screens/hunt_gameplay_screen.dart`**:
+    - Implemented a "one-by-one" hint reveal system.
+    - Added "View Image" functionality for hunts with a media URL.
+    - Added a "Report Hunt" button to the AppBar for moderation.
+- **`lib/screens/hunt_detail_screen.dart`**: Added the "Report Hunt" button to the AppBar.
+- **`test/models/hunt_test.dart`**: Updated tests to include `hints` and `imageUrl`.
+- **`about/requirements.md`**: Marked Step 4.4 as complete, finalizing Phase 4.

@@ -11,6 +11,7 @@ void main() {
       title: 'SLU Adventure',
       description: 'Find the hidden bells',
       creatorName: 'James',
+      creatorId: 'test-creator-id',
       difficulty: 'Easy',
       rating: 4.8,
       coordinates: const GeoPoint(44.5912, -75.1667),

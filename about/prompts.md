@@ -100,4 +100,17 @@
 ### April 8th
 * After changing the rules, I get the error "[firebase_auth/requests-from-referer-http://localhost:53698-are-blocked.] Error" whenever I try loggin in or signing up with a new account
 
-* 
+* For now, lets continue to step 4.3 in requirements.md
+
+* I am currently trying to deploy my app to a website using firebase, but I am getting an error regarding build packs.  Can you tell me potential causes for this problem and how to fix them?
+
+### April 14th
+* Resume 
+
+* Currently, the website has been deployed on the website 'slu-scav-hunt.web.app (yay!), but where the google maps software used to work after allowing location access, it now simply returns 'location permission is required to play.'  Do you know what the potential problem could be?
+
+* Perfect, however the signout option still doesnt work.  When i press the symbol on the top right of the app, nothing happens. Could you discern the possible issue regarding this lack of functionality?
+
+*  Please commit all changes and push them to github with the appropriate change notes
+
+

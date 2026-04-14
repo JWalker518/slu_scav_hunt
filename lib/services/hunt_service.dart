@@ -33,4 +33,13 @@ class HuntService {
           return snapshot.docs.map((doc) => Hunt.fromFirestore(doc)).toList();
         });
   }
+
+  /// Create a new hunt in Firestore
+  Future<void> createHunt(Hunt hunt) async {
+    try {
+      await _firestore.collection('hunts').add(hunt.toMap());
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -15,7 +15,14 @@ final currentPositionProvider = FutureProvider<Position?>((ref) async {
   return null;
 });
 
-final positionStreamProvider = StreamProvider<Position>((ref) {
+final positionStreamProvider = StreamProvider<Position>((ref) async* {
   final service = ref.watch(locationServiceProvider);
-  return service.getPositionStream();
+  final hasPermission = await service.handleLocationPermission();
+  
+  if (hasPermission) {
+    yield* service.getPositionStream();
+  } else {
+    // Optionally throw or handle as needed
+    throw Exception('Location permission not granted');
+  }
 });

@@ -17,6 +17,34 @@ class HuntDetailScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(hunt.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.report_problem, color: Colors.orange),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Report Hunt'),
+                  content: const Text('Are you sure you want to report this hunt for inappropriate content?'),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                    TextButton(
+                      onPressed: () {
+                        // In a real app, this would send a report to the backend
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Hunt reported. Thank you.')),
+                        );
+                      },
+                      child: const Text('Report', style: TextStyle(color: Colors.red)),
+                    ),
+                  ],
+                ),
+              );
+            },
+            tooltip: 'Report Hunt',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

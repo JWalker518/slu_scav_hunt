@@ -120,16 +120,22 @@ class AuthService {
 
   /// Sign out
   Future<void> signOut() async {
-    try {
-      // Only attempt Google Sign-Out if not on Windows
-      if (!_shouldCheckPlatform) {
+    // Only attempt Google Sign-Out if not on Windows
+    if (!_shouldCheckPlatform) {
+      try {
         await _ensureGoogleSignInInitialized();
         await _googleSignIn.signOut();
+      } catch (e) {
+        // Log the error but don't rethrow, as we still want to sign out from Firebase
+        debugPrint('Google Sign-Out error: $e');
       }
-      
-      // Sign out from Firebase
+    }
+    
+    // Sign out from Firebase
+    try {
       await _auth.signOut();
     } catch (e) {
+      debugPrint('Firebase Sign-Out error: $e');
       rethrow;
     }
   }

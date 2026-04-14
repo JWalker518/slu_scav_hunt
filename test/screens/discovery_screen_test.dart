@@ -42,6 +42,7 @@ void main() {
       title: 'Amazing Hunt',
       description: 'A great description',
       creatorName: 'James',
+      creatorId: 'test-creator-id',
       difficulty: 'Easy',
       rating: 4.5,
       coordinates: const GeoPoint(0, 0),

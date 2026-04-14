@@ -5,6 +5,7 @@ import 'package:slu_scav_hunt/providers/auth_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/widgets/hunt_card.dart';
 import 'package:slu_scav_hunt/screens/hunt_detail_screen.dart';
+import 'package:slu_scav_hunt/screens/hunt_creation_screen.dart';
 
 class HuntDiscoveryScreen extends ConsumerWidget {
   const HuntDiscoveryScreen({super.key});
@@ -57,6 +58,16 @@ class HuntDiscoveryScreen extends ConsumerWidget {
         error: (err, stack) => Center(
           child: Text('Error: $err'),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HuntCreationScreen()),
+          );
+        },
+        tooltip: 'Create New Hunt',
+        child: const Icon(Icons.add),
       ),
     );
   }

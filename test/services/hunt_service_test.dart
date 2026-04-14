@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:slu_scav_hunt/services/hunt_service.dart';
+import 'package:slu_scav_hunt/models/hunt.dart';
 
 void main() {
   group('HuntService Test', () {
@@ -19,6 +20,7 @@ void main() {
         'title': 'Test Hunt 1',
         'description': 'Description 1',
         'creatorName': 'Creator 1',
+        'creatorId': 'user1',
         'difficulty': 'Easy',
         'rating': 4.0,
         'coordinates': const GeoPoint(44.5912, -75.1667),
@@ -29,6 +31,7 @@ void main() {
         'title': 'Test Hunt 2',
         'description': 'Description 2',
         'creatorName': 'Creator 2',
+        'creatorId': 'user2',
         'difficulty': 'Hard',
         'rating': 5.0,
         'coordinates': const GeoPoint(44.0, -75.0),
@@ -51,6 +54,7 @@ void main() {
         'title': 'Alpha Hunt',
         'description': 'Description A',
         'creatorName': 'Creator A',
+        'creatorId': 'userA',
         'difficulty': 'Easy',
         'rating': 4.0,
         'coordinates': const GeoPoint(44.5912, -75.1667),
@@ -61,6 +65,7 @@ void main() {
         'title': 'Beta Hunt',
         'description': 'Description B',
         'creatorName': 'Creator B',
+        'creatorId': 'userB',
         'difficulty': 'Hard',
         'rating': 5.0,
         'coordinates': const GeoPoint(44.0, -75.0),
@@ -72,6 +77,27 @@ void main() {
 
       expect(filteredList.length, 1);
       expect(filteredList[0].title, 'Alpha Hunt');
+    });
+
+    test('createHunt should add a new hunt to Firestore', () async {
+      final newHunt = Hunt(
+        id: '',
+        title: 'New Hunt',
+        description: 'New Description',
+        creatorName: 'New Creator',
+        creatorId: 'newUser',
+        difficulty: 'Normal',
+        rating: 5.0,
+        coordinates: const GeoPoint(10.0, 20.0),
+        riddle: 'New Riddle',
+      );
+
+      await huntService.createHunt(newHunt);
+
+      final snapshot = await fakeFirestore.collection('hunts').get();
+      expect(snapshot.docs.length, 1);
+      expect(snapshot.docs.first.data()['title'], 'New Hunt');
+      expect(snapshot.docs.first.data()['creatorId'], 'newUser');
     });
   });
 }

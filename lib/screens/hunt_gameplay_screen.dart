@@ -19,6 +19,66 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   bool _isCompleted = false;
   static const double completionRadius = 30.0; // meters
+  int _revealedHints = 0;
+
+  void _showHint() {
+    if (_revealedHints < widget.hunt.hints.length) {
+      setState(() {
+        _revealedHints++;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Hint ${_revealedHints}: ${widget.hunt.hints[_revealedHints - 1]}')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No more hints available!')),
+      );
+    }
+  }
+
+  void _showImage() {
+    if (widget.hunt.imageUrl != null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Image.network(
+            widget.hunt.imageUrl!,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return const Center(child: CircularProgressIndicator());
+            },
+            errorBuilder: (context, error, stackTrace) => const Text('Could not load image'),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close')),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _reportHunt() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Report Hunt'),
+        content: const Text('Are you sure you want to report this hunt for inappropriate content?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              // In a real app, this would send a report to the backend
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Hunt reported. Thank you.')),
+              );
+            },
+            child: const Text('Report', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +88,13 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hunting: ${widget.hunt.title}'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.report_problem, color: Colors.orange),
+            onPressed: _reportHunt,
+            tooltip: 'Report Hunt',
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -68,28 +135,60 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
             top: 16,
             left: 16,
             right: 16,
-            child: Card(
-              color: Colors.white.withValues(),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+            child: Column(
+              children: [
+                Card(
+                  color: Colors.white.withValues(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'The Riddle',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.hunt.riddle,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'The Riddle',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                    if (widget.hunt.hints.isNotEmpty)
+                      ElevatedButton.icon(
+                        onPressed: _showHint,
+                        icon: const Icon(Icons.lightbulb),
+                        label: Text('Hint (${_revealedHints}/${widget.hunt.hints.length})'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber[100],
+                          foregroundColor: Colors.amber[900],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.hunt.riddle,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontStyle: FontStyle.italic),
-                    ),
+                    if (widget.hunt.imageUrl != null) ...[
+                      const SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: _showImage,
+                        icon: const Icon(Icons.image),
+                        label: const Text('View Image'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[100],
+                          foregroundColor: Colors.blue[900],
+                        ),
+                      ),
+                    ],
                   ],
                 ),
-              ),
+              ],
             ),
           ),
 
@@ -162,6 +261,8 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+
+            // Checks if the hunt is finished
             if (_isCompleted) ...[
               const Icon(Icons.check_circle, color: Colors.white, size: 48),
               const SizedBox(height: 8),
@@ -200,6 +301,8 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
     );
   }
 
+
+  // Updates the app live to indicate that the hunt was completed
   void _onHuntCompleted() {
     setState(() {
       _isCompleted = true;
