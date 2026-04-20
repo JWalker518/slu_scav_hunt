@@ -172,7 +172,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _difficulty,
+                    initialValue: _difficulty,
                     decoration: const InputDecoration(labelText: 'Difficulty'),
                     items: ['Easy', 'Normal', 'Hard']
                         .map((d) => DropdownMenuItem(value: d, child: Text(d)))
@@ -198,7 +198,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                         ),
                       ],
                     );
-                  }).toList(),
+                  }),
                   TextButton.icon(
                     onPressed: _addHint,
                     icon: const Icon(Icons.add),

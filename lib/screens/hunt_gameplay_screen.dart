@@ -27,7 +27,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
         _revealedHints++;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hint ${_revealedHints}: ${widget.hunt.hints[_revealedHints - 1]}')),
+        SnackBar(content: Text('Hint $_revealedHints: ${widget.hunt.hints[_revealedHints - 1]}')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -168,7 +168,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
                       ElevatedButton.icon(
                         onPressed: _showHint,
                         icon: const Icon(Icons.lightbulb),
-                        label: Text('Hint (${_revealedHints}/${widget.hunt.hints.length})'),
+                        label: Text('Hint ($_revealedHints/${widget.hunt.hints.length})'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.amber[100],
                           foregroundColor: Colors.amber[900],

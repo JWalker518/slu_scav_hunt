@@ -28,7 +28,7 @@ class Hunt {
     this.imageUrl,
   });
 
-  /// Create a Hunt object from a Firestore document
+  // Create a Hunt object from a Firestore document
   factory Hunt.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
     
@@ -55,13 +55,13 @@ class Hunt {
     );
   }
 
-  /// Helper to safely convert Firestore numbers (which might be int or double) to double
+  // Helper to safely convert Firestore numbers (which might be int or double) to double
   static double _toDouble(dynamic value) {
     if (value is num) return value.toDouble();
     return 0.0;
   }
 
-  /// Helper to safely convert Firestore data to a List<String>
+  // Helper to safely convert Firestore data to a List<String>
   static List<String> _toStringList(dynamic value) {
     if (value is List) {
       return value.map((e) => e.toString()).toList();
@@ -69,7 +69,7 @@ class Hunt {
     return [];
   }
 
-  /// Convert a Hunt object into a Map for Firestore storage
+  // Convert a Hunt object into a Map for Firestore storage
   Map<String, dynamic> toMap() {
     return {
       'title': title,
