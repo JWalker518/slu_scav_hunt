@@ -113,4 +113,15 @@
 
 *  Please commit all changes and push them to github with the appropriate change notes
 
+### April 20th
+* I have just upgraded my flutter to a newer version.  Please chec to see if any changes need to be made to the code, and let me know what before you try.
 
+* Let us continue with Phase 5, step 5.1
+
+* Currently, the Google Sign-In method still doesn't work. Could it be that you need to import something like firebase_auth to access the correct methods?  Please try and troubleshoot why the google sign-in doesn't work.
+
+* The pop up window now says "The requested action is invalid." Are we sure the valid permissions are in place so that we can complete a google sign-in?
+
+* In line 93 of auth_service.dart, the method 'signIn' isn't defined for the type 'GoogleSignIn,' are you sure you have the correct import for signing in with Google?
+
+* It still doesn't work, but we can debug this later.  Please continue to step 5.2 in requirements.md

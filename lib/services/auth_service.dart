@@ -76,35 +76,46 @@ class AuthService {
     }
 
     try {
+      // For Web, it's most reliable to use Firebase's native signInWithPopup
+      if (kIsWeb) {
+        debugPrint('Using signInWithPopup for Web...');
+        final googleProvider = GoogleAuthProvider();
+        return await _auth.signInWithPopup(googleProvider);
+      }
+
+      // For Mobile (iOS/Android)
+      debugPrint('Using google_sign_in for Mobile...');
       await _ensureGoogleSignInInitialized();
       
       // Trigger the authentication flow
-      // In 7.x, cancellation might throw an exception instead of returning null
-      final gsign.GoogleSignInAccount? googleUser;
+      // In 7.x, authenticate() is the standard method for interactive sign-in.
+      // It returns a non-nullable GoogleSignInAccount or throws on cancellation/error.
+      final gsign.GoogleSignInAccount googleUser;
       try {
         googleUser = await _googleSignIn.authenticate();
       } catch (e) {
-        // Return null for canceled flow (common in 7.x exceptions)
+        debugPrint('Google Sign-In authentication error/cancel: $e');
+        // If it's a cancellation, we return null to signal "not signed in but no crash"
         return null;
       }
+
+      // In 7.x, tokens are split across different classes
+      // 1. Get the idToken from authentication
+      final googleAuth = await googleUser.authentication;
       
+      // 2. Get the accessToken from authorizationClient
+      final clientAuth = await googleUser.authorizationClient.authorizeScopes([]);
 
-      // Obtain the auth details from the result (synchronous in 7.x)
-      final googleAuth = googleUser.authentication;
-
-      // To get the access token in 7.x, we use the authorizationClient
-      // authorizeScopes returns a GoogleSignInClientAuthorization
-      final authorization = await googleUser.authorizationClient.authorizeScopes([]);
-
-      // Create a new credential
+      // Create a new credential for Firebase
       final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: authorization.accessToken,
+        accessToken: clientAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       // Once signed in, return the UserCredential
       return await _auth.signInWithCredential(credential);
     } catch (e) {
+      debugPrint('Firebase Google Sign-In error: $e');
       rethrow;
     }
   }

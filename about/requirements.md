@@ -100,10 +100,10 @@ Goal: Implement the core GPS features allowing users to create and participate i
 
 Phase 5: Polish & Persistence 
 
-    [ ] Step 5.1: Local State (Shared Preferences) 
+    [x] Step 5.1: Local State (Shared Preferences) 
         - Implement local persistence (e.g., Dark Mode toggle or "Don't show this again" intro screen). 
 
-    [ ] Step 5.2: Error Handling & Loading States 
+    [x] Step 5.2: Error Handling & Loading States 
         - Ensure all asynchronous Riverpod providers correctly handle loading and error states in the UI. 
 
     [ ] Step 5.3: Final Theming & Cleanup 

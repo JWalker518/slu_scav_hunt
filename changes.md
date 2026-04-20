@@ -226,3 +226,36 @@ For now, lets continue to step 4.3 in requirements.md
 - **`lib/screens/hunt_detail_screen.dart`**: Added the "Report Hunt" button to the AppBar.
 - **`test/models/hunt_test.dart`**: Updated tests to include `hints` and `imageUrl`.
 - **`about/requirements.md`**: Marked Step 4.4 as complete, finalizing Phase 4.
+
+## [2026-04-20] - Phase 5: Polish & Persistence
+
+### Prompt:
+Let us continue with Phase 5, step 5.1
+
+### Changed
+- **`lib/services/auth_service.dart`**:
+    - Fixed Google Sign-In for Web by using `signInWithPopup`, which is more reliable for Firebase projects on the web.
+    - Updated Google Sign-In for Mobile to comply with `google_sign_in` 7.x API, correctly retrieving `idToken` from `authentication` and `accessToken` via `authorizationClient.authorizeScopes`.
+    - Added robustness with missing `await` and null checks.
+- **`lib/providers/theme_provider.dart`**: Implemented `ThemeNotifier` using `shared_preferences` to persist the user's `ThemeMode` (Light/Dark).
+
+### Changed
+- **`lib/main.dart`**: Updated `MyApp` to be a `ConsumerWidget` and watch the `themeProvider` to apply the persisted theme mode.
+- **`lib/screens/discovery_screen.dart`**: Added a theme toggle button to the `AppBar` to allow users to switch between Light and Dark modes.
+- **`about/requirements.md`**: Marked Step 5.1 as complete.
+
+## [2026-04-20] - Phase 5: Polish & Persistence - Continued
+
+### Prompt:
+It still doesn't work, but we can debug this later. Please continue to step 5.2 in requirements.md
+
+### Added
+- **`lib/providers/auth_providers.dart`**: Implemented `authControllerProvider` using `StateNotifier` and `AsyncValue` for global auth loading/error management.
+- **`lib/providers/hunt_providers.dart`**: Implemented `huntControllerProvider` for managing hunt creation state.
+
+### Changed
+- **`lib/screens/login_screen.dart`**: Refactored to use `authControllerProvider`. Removed local `_isLoading` and implemented reactive error snackbars using `ref.listen`.
+- **`lib/screens/registration_screen.dart`**: Refactored to use `authControllerProvider` for centralized state management.
+- **`lib/screens/discovery_screen.dart`**: Updated the logout button to use the `authControllerProvider`.
+- **`lib/screens/hunt_creation_screen.dart`**: Refactored to use `huntControllerProvider`, improving error handling and UI state consistency.
+- **`about/requirements.md`**: Marked Step 5.2 as complete.

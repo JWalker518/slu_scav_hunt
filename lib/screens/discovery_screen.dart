@@ -7,12 +7,15 @@ import 'package:slu_scav_hunt/widgets/hunt_card.dart';
 import 'package:slu_scav_hunt/screens/hunt_detail_screen.dart';
 import 'package:slu_scav_hunt/screens/hunt_creation_screen.dart';
 
+import 'package:slu_scav_hunt/providers/theme_provider.dart';
+
 class HuntDiscoveryScreen extends ConsumerWidget {
   const HuntDiscoveryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final huntsAsync = ref.watch(huntsProvider);
+    final themeMode = ref.watch(themeProvider);
 
     // The menu bar on the top of the screen
     return Scaffold(
@@ -21,10 +24,16 @@ class HuntDiscoveryScreen extends ConsumerWidget {
         title: const Text('Discover Hunts'),
         actions: [
           IconButton(
+            icon: Icon(themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              ref.read(themeProvider.notifier).toggleTheme();
+            },
+            tooltip: 'Toggle Theme',
+          ),
+          IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              final authService = ref.read(authServiceProvider);
-              await authService.signOut();
+              await ref.read(authControllerProvider.notifier).logout();
             },
             tooltip: 'Logout',
           ),

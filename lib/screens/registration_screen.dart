@@ -14,7 +14,6 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -34,29 +33,29 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
-    try {
-      final authService = ref.read(authServiceProvider);
-      await authService.registerWithEmailAndPassword(
-        _emailController.text.trim(),
-        _passwordController.text,
-      );
-      if (mounted) {
-        Navigator.of(context).pop(); // Go back to home/auth gate
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
+    await ref.read(authControllerProvider.notifier).register(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Listen for errors and show snackbars
+    ref.listen<AsyncValue<void>>(authControllerProvider, (previous, next) {
+      if (!next.isLoading && next.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.error.toString())),
+        );
+      } else if (!next.isLoading && !next.hasError && previous?.isLoading == true) {
+        // Registration success, pop the screen
+        Navigator.of(context).pop();
+      }
+    });
+
+    final authState = ref.watch(authControllerProvider);
+    final isLoading = authState.isLoading;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Register')),
       body: Padding(
@@ -88,7 +87,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 validator: (value) => value!.isEmpty ? 'Confirm password' : null,
               ),
               const SizedBox(height: 24),
-              if (_isLoading)
+              if (isLoading)
                 const Center(child: CircularProgressIndicator())
               else
                 ElevatedButton(

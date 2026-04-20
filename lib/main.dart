@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:slu_scav_hunt/firebase_options.dart';
 import 'package:slu_scav_hunt/theme.dart';
 import 'package:slu_scav_hunt/widgets/auth_gate.dart';
+import 'package:slu_scav_hunt/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,16 +21,18 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+
     return MaterialApp(
       title: 'Hunt',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
 
       // Link to list of hunts 
       home: const AuthGate(),

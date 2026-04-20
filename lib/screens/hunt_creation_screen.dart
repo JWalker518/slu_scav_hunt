@@ -24,7 +24,6 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
   final List<TextEditingController> _hintControllers = [];
   String _difficulty = 'Normal';
   LatLng? _selectedLocation;
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -84,57 +83,54 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
+    final user = ref.read(authStateProvider).value;
 
-    try {
-      final user = ref.read(authStateProvider).value;
-      final huntService = ref.read(huntServiceProvider);
+    final hints = _hintControllers
+        .map((c) => c.text.trim())
+        .where((text) => text.isNotEmpty)
+        .toList();
 
-      final hints = _hintControllers
-          .map((c) => c.text.trim())
-          .where((text) => text.isNotEmpty)
-          .toList();
+    final newHunt = Hunt(
+      id: '', // Firestore will generate the ID
+      title: _titleController.text.trim(),
+      description: _descriptionController.text.trim(),
+      riddle: _riddleController.text.trim(),
+      difficulty: _difficulty,
+      creatorName: user?.displayName ?? user?.email ?? 'Anonymous',
+      creatorId: user?.uid ?? '',
+      rating: 5.0, // Default rating for new hunts
+      coordinates: GeoPoint(_selectedLocation!.latitude, _selectedLocation!.longitude),
+      hints: hints,
+      imageUrl: _imageUrlController.text.trim().isNotEmpty 
+          ? _imageUrlController.text.trim() 
+          : null,
+    );
 
-      final newHunt = Hunt(
-        id: '', // Firestore will generate the ID
-        title: _titleController.text.trim(),
-        description: _descriptionController.text.trim(),
-        riddle: _riddleController.text.trim(),
-        difficulty: _difficulty,
-        creatorName: user?.displayName ?? user?.email ?? 'Anonymous',
-        creatorId: user?.uid ?? '',
-        rating: 5.0, // Default rating for new hunts
-        coordinates: GeoPoint(_selectedLocation!.latitude, _selectedLocation!.longitude),
-        hints: hints,
-        imageUrl: _imageUrlController.text.trim().isNotEmpty 
-            ? _imageUrlController.text.trim() 
-            : null,
-      );
+    await ref.read(huntControllerProvider.notifier).createHunt(newHunt);
+  }
 
-      await huntService.createHunt(newHunt);
-
-      if (mounted) {
+  @override
+  Widget build(BuildContext context) {
+    // Listen for state changes to handle navigation and feedback
+    ref.listen<AsyncValue<void>>(huntControllerProvider, (previous, next) {
+      if (!next.isLoading && next.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error creating hunt: ${next.error}')),
+        );
+      } else if (!next.isLoading && !next.hasError && previous?.isLoading == true) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Hunt created successfully!')),
         );
       }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error creating hunt: $e')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
-  }
+    });
 
-  @override
-  Widget build(BuildContext context) {
+    final huntState = ref.watch(huntControllerProvider);
+    final isLoading = huntState.isLoading;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Create New Hunt')),
-      body: _isLoading 
+      body: isLoading 
         ? const Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
@@ -172,7 +168,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    initialValue: _difficulty,
+                    value: _difficulty,
                     decoration: const InputDecoration(labelText: 'Difficulty'),
                     items: ['Easy', 'Normal', 'Hard']
                         .map((d) => DropdownMenuItem(value: d, child: Text(d)))
@@ -198,7 +194,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                         ),
                       ],
                     );
-                  }),
+                  }).toList(),
                   TextButton.icon(
                     onPressed: _addHint,
                     icon: const Icon(Icons.add),

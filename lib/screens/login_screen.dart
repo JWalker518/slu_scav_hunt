@@ -14,7 +14,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -25,43 +24,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
-    
-    setState(() => _isLoading = true);
-    try {
-      final authService = ref.read(authServiceProvider);
-      await authService.signInWithEmailAndPassword(
-        _emailController.text.trim(),
-        _passwordController.text,
-      );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
+    await ref.read(authControllerProvider.notifier).login(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
   }
 
   Future<void> _loginWithGoogle() async {
-    setState(() => _isLoading = true);
-    try {
-      final authService = ref.read(authServiceProvider);
-      await authService.signInWithGoogle();
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
+    await ref.read(authControllerProvider.notifier).loginWithGoogle();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Listen for errors and show snackbars
+    ref.listen<AsyncValue<void>>(authControllerProvider, (previous, next) {
+      if (!next.isLoading && next.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.error.toString())),
+        );
+      }
+    });
+
+    final authState = ref.watch(authControllerProvider);
+    final isLoading = authState.isLoading;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
@@ -86,7 +72,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 validator: (value) => value!.isEmpty ? 'Enter password' : null,
               ),
               const SizedBox(height: 24),
-              if (_isLoading)
+              if (isLoading)
                 const Center(child: CircularProgressIndicator())
               else
                 Column(
