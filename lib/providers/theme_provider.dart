@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Provider for SharedPreferences instance.
+/// This should be overridden in main.dart
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+  throw UnimplementedError();
+});
+
 /// Provider to handle theme mode persistence.
 final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(() {
   return ThemeNotifier();
@@ -9,37 +15,42 @@ final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(() {
 
 class ThemeNotifier extends Notifier<ThemeMode> {
   static const String _themeKey = 'theme_mode';
-  late SharedPreferences _prefs;
 
   @override
   ThemeMode build() {
-    // We can't use async in build, so we'll load the initial value
-    // synchronously or use a default. For Riverpod, the recommended
-    // pattern for SharedPreferences is to initialize it before runApp.
-    // However, for a simple toggle, we can initialize it here.
-    _init();
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final themeIndex = prefs.getInt(_themeKey);
+    if (themeIndex != null) {
+      return ThemeMode.values[themeIndex];
+    }
     return ThemeMode.system;
   }
 
-  Future<void> _init() async {
-    _prefs = await SharedPreferences.getInstance();
-    final themeIndex = _prefs.getInt(_themeKey);
-    if (themeIndex != null) {
-      state = ThemeMode.values[themeIndex];
-    }
-  }
-
   Future<void> toggleTheme() async {
+    final prefs = ref.read(sharedPreferencesProvider);
+    
+    final ThemeMode nextMode;
     if (state == ThemeMode.light) {
-      state = ThemeMode.dark;
+      nextMode = ThemeMode.dark;
+    } else if (state == ThemeMode.dark) {
+      nextMode = ThemeMode.light;
     } else {
-      state = ThemeMode.light;
+      // If currently system mode, we need to toggle to the OPPOSITE of system brightness
+      final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      if (brightness == Brightness.light) {
+        nextMode = ThemeMode.dark;
+      } else {
+        nextMode = ThemeMode.light;
+      }
     }
-    await _prefs.setInt(_themeKey, state.index);
+    
+    state = nextMode;
+    await prefs.setInt(_themeKey, state.index);
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
+    final prefs = ref.read(sharedPreferencesProvider);
     state = mode;
-    await _prefs.setInt(_themeKey, state.index);
+    await prefs.setInt(_themeKey, state.index);
   }
 }

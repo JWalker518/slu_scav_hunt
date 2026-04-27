@@ -125,3 +125,9 @@
 * In line 93 of auth_service.dart, the method 'signIn' isn't defined for the type 'GoogleSignIn,' are you sure you have the correct import for signing in with Google?
 
 * It still doesn't work, but we can debug this later.  Please continue to step 5.2 in requirements.md
+
+### April 22nd
+* Please proceed to step 5.3
+
+### April 27th
+* I have created, and will continue to create new steps in the requirements page that aim to implement bug fixes. For example, I have created a new step in phase 5 aiming to fix the display button. Can you complete step 5.4, remebering also to committ and push to Github?

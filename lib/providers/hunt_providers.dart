@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/services/hunt_service.dart';
 

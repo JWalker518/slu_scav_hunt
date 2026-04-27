@@ -106,6 +106,18 @@ Phase 5: Polish & Persistence
     [x] Step 5.2: Error Handling & Loading States 
         - Ensure all asynchronous Riverpod providers correctly handle loading and error states in the UI. 
 
-    [ ] Step 5.3: Final Theming & Cleanup 
+    [x] Step 5.3: Final Theming & Cleanup 
         - Apply consistent padding, colors, and typography. 
-        - Refactor any files that have grown too large (> 200 lines) by extracting widgets. 
+        - Refactor any files that have grown too large (> 200 lines) by extracting widgets.
+    
+    [x] Step 5.4: Bug Fixes
+        - The display settings (i.e. dark or light mode) activates after the second activation of the button, then it works perfectly fine.  Please fix it so that the button activates upon the first button press.
+
+Phase 6: New Features and Bug Fixes
+    [ ] Step 6.1: Toggleable distance
+        - Create a toggle in the hunt create screen that decides whether the user's exact distance will be shown during the hunt
+        - When enabled, the exact distance will be shown, when disabled, it only tells you if you're close at certain distances
+    
+    [ ] Step 6.2: Different Homepages
+        - Create two discovery screens for the app; One where the hunts are listed as "Distance shown" and the other where it is more riddle-like, and the user will not know their exact distance
+        - Hunts with distance shown should only appear in the "Distance Shown" feed, and the other discovery page should have the "Riddle" hunts where you do not know your distance.

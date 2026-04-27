@@ -6,6 +6,8 @@ import '../models/hunt.dart';
 import '../providers/hunt_providers.dart';
 import '../providers/auth_providers.dart';
 import '../services/privacy_service.dart';
+import '../widgets/hint_input_list.dart';
+import '../widgets/location_picker_card.dart';
 import 'map_picker_screen.dart';
 
 class HuntCreationScreen extends ConsumerStatefulWidget {
@@ -74,7 +76,6 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
       return;
     }
 
-    // Check Privacy Zones
     final restrictedAreaName = PrivacyService.isLocationRestricted(_selectedLocation!);
     if (restrictedAreaName != null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,21 +85,20 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
     }
 
     final user = ref.read(authStateProvider).value;
-
     final hints = _hintControllers
         .map((c) => c.text.trim())
         .where((text) => text.isNotEmpty)
         .toList();
 
     final newHunt = Hunt(
-      id: '', // Firestore will generate the ID
+      id: '',
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
       riddle: _riddleController.text.trim(),
       difficulty: _difficulty,
       creatorName: user?.displayName ?? user?.email ?? 'Anonymous',
       creatorId: user?.uid ?? '',
-      rating: 5.0, // Default rating for new hunts
+      rating: 5.0,
       coordinates: GeoPoint(_selectedLocation!.latitude, _selectedLocation!.longitude),
       hints: hints,
       imageUrl: _imageUrlController.text.trim().isNotEmpty 
@@ -111,7 +111,6 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Listen for state changes to handle navigation and feedback
     ref.listen<AsyncValue<void>>(huntControllerProvider, (previous, next) {
       if (!next.isLoading && next.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -176,45 +175,15 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                     onChanged: (value) => setState(() => _difficulty = value!),
                   ),
                   const SizedBox(height: 24),
-                  const Text('Hints', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  ..._hintControllers.asMap().entries.map((entry) {
-                    int idx = entry.key;
-                    TextEditingController controller = entry.value;
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: controller,
-                            decoration: InputDecoration(labelText: 'Hint ${idx + 1}'),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.remove_circle, color: Colors.red),
-                          onPressed: () => _removeHint(idx),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-                  TextButton.icon(
-                    onPressed: _addHint,
-                    icon: const Icon(Icons.add),
-                    label: const Text('ADD HINT'),
+                  HintInputList(
+                    controllers: _hintControllers,
+                    onAddHint: _addHint,
+                    onRemoveHint: _removeHint,
                   ),
                   const SizedBox(height: 24),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.location_on, 
-                        color: _selectedLocation != null ? Colors.green : Colors.grey,
-                      ),
-                      title: Text(_selectedLocation == null 
-                        ? 'No location selected' 
-                        : 'Location Set: ${_selectedLocation!.latitude.toStringAsFixed(4)}, ${_selectedLocation!.longitude.toStringAsFixed(4)}'),
-                      trailing: TextButton(
-                        onPressed: _pickLocation,
-                        child: Text(_selectedLocation == null ? 'PICK LOCATION' : 'CHANGE'),
-                      ),
-                    ),
+                  LocationPickerCard(
+                    selectedLocation: _selectedLocation,
+                    onPickLocation: _pickLocation,
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(

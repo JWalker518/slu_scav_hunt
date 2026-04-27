@@ -17,11 +17,11 @@ class AuthService {
         _googleSignIn = googleSignIn ?? gsign.GoogleSignIn.instance,
         _isTest = isTest;
 
-  bool get _shouldCheckPlatform => !_isTest && !kIsWeb && Platform.isWindows;
+  bool get _shouldCheckPlatform => !_isTest && (kIsWeb || Platform.isWindows);
 
   Future<void> _ensureGoogleSignInInitialized() async {
-    // google_sign_in does not natively support Windows.
-    // Calling it on Windows will likely throw an UnimplementedError or hang.
+    // google_sign_in initialization is not required on Web when using signInWithPopup,
+    // and it's not supported on Windows.
     if (_shouldCheckPlatform) return;
 
     if (!_isGoogleSignInInitialized) {
@@ -101,7 +101,7 @@ class AuthService {
 
       // In 7.x, tokens are split across different classes
       // 1. Get the idToken from authentication
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = googleUser.authentication;
       
       // 2. Get the accessToken from authorizationClient
       final clientAuth = await googleUser.authorizationClient.authorizeScopes([]);

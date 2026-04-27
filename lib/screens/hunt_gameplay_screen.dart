@@ -5,6 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import '../models/hunt.dart';
 import '../providers/location_providers.dart';
+import '../widgets/gameplay_hud.dart';
+import '../widgets/gameplay_status_card.dart';
 
 class HuntGameplayScreen extends ConsumerStatefulWidget {
   final Hunt hunt;
@@ -67,7 +69,6 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
           TextButton(
             onPressed: () {
-              // In a real app, this would send a report to the backend
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Hunt reported. Thank you.')),
@@ -98,7 +99,6 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
       ),
       body: Stack(
         children: [
-          // The Map
           initialPositionAsync.when(
             data: (initialPosition) {
               final currentPos = positionAsync.value;
@@ -114,8 +114,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
                   _controller.complete(controller);
                 },
                 myLocationEnabled: true,
-                myLocationButtonEnabled: false, // We'll use our own FAB
-                // Explicitly add a marker for the user's location
+                myLocationButtonEnabled: false,
                 markers: currentPos != null ? {
                   Marker(
                     markerId: const MarkerId('user_location'),
@@ -130,69 +129,20 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
             error: (err, stack) => Center(child: Text('Error: $err')),
           ),
 
-          // HUD / Overlay
           Positioned(
             top: 16,
             left: 16,
             right: 16,
-            child: Column(
-              children: [
-                Card(
-                  color: Colors.white.withValues(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'The Riddle',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          widget.hunt.riddle,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (widget.hunt.hints.isNotEmpty)
-                      ElevatedButton.icon(
-                        onPressed: _showHint,
-                        icon: const Icon(Icons.lightbulb),
-                        label: Text('Hint ($_revealedHints/${widget.hunt.hints.length})'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.amber[100],
-                          foregroundColor: Colors.amber[900],
-                        ),
-                      ),
-                    if (widget.hunt.imageUrl != null) ...[
-                      const SizedBox(width: 8),
-                      ElevatedButton.icon(
-                        onPressed: _showImage,
-                        icon: const Icon(Icons.image),
-                        label: const Text('View Image'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[100],
-                          foregroundColor: Colors.blue[900],
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ],
+            child: GameplayHUD(
+              riddle: widget.hunt.riddle,
+              revealedHints: _revealedHints,
+              totalHints: widget.hunt.hints.length,
+              hasImage: widget.hunt.imageUrl != null,
+              onShowHint: _showHint,
+              onShowImage: _showImage,
             ),
           ),
 
-          // Completion Status
           Positioned(
             bottom: 32,
             left: 16,
@@ -210,7 +160,11 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
                   _onHuntCompleted();
                 }
 
-                return _buildStatusCard(distance);
+                return GameplayStatusCard(
+                  isCompleted: _isCompleted,
+                  distance: distance,
+                  onBack: () => Navigator.pop(context),
+                );
               },
               loading: () => const Card(
                 child: Padding(
@@ -251,62 +205,9 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
     );
   }
 
-  Widget _buildStatusCard(double distance) {
-    final theme = Theme.of(context);
-    final isNear = distance < 100;
-
-    return Card(
-      color: _isCompleted ? Colors.green : (isNear ? Colors.orange : theme.cardColor),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-
-            // Checks if the hunt is finished
-            if (_isCompleted) ...[
-              const Icon(Icons.check_circle, color: Colors.white, size: 48),
-              const SizedBox(height: 8),
-              const Text(
-                'CORRECT! YOU FOUND IT!',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Back to Discovery'),
-              ),
-            ] else ...[
-              Text(
-                isNear ? 'You are very close!' : 'Keep searching...',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: isNear ? Colors.white : theme.textTheme.bodyLarge?.color,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Distance: ${distance.toInt()}m',
-                style: TextStyle(
-                  color: isNear ? Colors.white70 : theme.textTheme.bodyMedium?.color,
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  // Updates the app live to indicate that the hunt was completed
   void _onHuntCompleted() {
     setState(() {
       _isCompleted = true;
     });
-    // Optional: Add haptic feedback or sound here
   }
 }

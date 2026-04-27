@@ -4,6 +4,7 @@ import 'package:slu_scav_hunt/models/hunt.dart';
 import 'package:slu_scav_hunt/screens/hunt_gameplay_screen.dart';
 import 'package:slu_scav_hunt/widgets/location_rationale_dialog.dart';
 import 'package:slu_scav_hunt/providers/location_providers.dart';
+import 'package:slu_scav_hunt/widgets/hunt_detail_header.dart';
 
 class HuntDetailScreen extends ConsumerWidget {
   final Hunt hunt;
@@ -20,28 +21,7 @@ class HuntDetailScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.report_problem, color: Colors.orange),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Report Hunt'),
-                  content: const Text('Are you sure you want to report this hunt for inappropriate content?'),
-                  actions: [
-                    TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-                    TextButton(
-                      onPressed: () {
-                        // In a real app, this would send a report to the backend
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Hunt reported. Thank you.')),
-                        );
-                      },
-                      child: const Text('Report', style: TextStyle(color: Colors.red)),
-                    ),
-                  ],
-                ),
-              );
-            },
+            onPressed: () => _showReportDialog(context),
             tooltip: 'Report Hunt',
           ),
         ],
@@ -51,49 +31,14 @@ class HuntDetailScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ... [Same code as before for UI] ...
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    hunt.title,
-                    style: theme.textTheme.displaySmall?.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 24),
-                    const SizedBox(width: 4),
-                    Text(
-                      hunt.rating.toStringAsFixed(1),
-                      style: theme.textTheme.titleLarge,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            
-            // Creator and Difficulty
-            Row(
-              children: [
-                Text(
-                  'Created by ${hunt.creatorName}',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                const Spacer(),
-                _buildDifficultyChip(hunt.difficulty),
-              ],
+            HuntDetailHeader(
+              title: hunt.title,
+              rating: hunt.rating,
+              creatorName: hunt.creatorName,
+              difficultyChip: _buildDifficultyChip(hunt.difficulty),
             ),
             const Divider(height: 32),
 
-            // Description Section
             Text(
               'Description',
               style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -105,7 +50,6 @@ class HuntDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
 
-            // Riddle Section (Preview)
             Card(
               color: theme.colorScheme.secondaryContainer,
               child: Padding(
@@ -139,44 +83,11 @@ class HuntDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 40),
 
-            // Action Button
             SizedBox(
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: () async {
-                  final locationService = ref.read(locationServiceProvider);
-                  
-                  // 1. Show Rationale for Foreground Location
-                  final proceed = await showDialog<bool>(
-                    context: context,
-                    builder: (context) => const LocationRationaleDialog(),
-                  );
-
-                  if (proceed == true) {
-                    final hasPermission = await locationService.handleLocationPermission();
-                    if (hasPermission) {
-                      // 2. (Optional) Show Rationale for Background Location
-                      // For now, we proceed to gameplay with foreground.
-                      // We can add a "Enable Background Tracking" toggle in settings later.
-                      
-                      if (context.mounted) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HuntGameplayScreen(hunt: hunt),
-                          ),
-                        );
-                      }
-                    } else {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Location permission is required to play.')),
-                        );
-                      }
-                    }
-                  }
-                },
+                onPressed: () => _handleStartHunt(context, ref),
                 child: const Text(
                   'START HUNT',
                   style: TextStyle(fontSize: 18, letterSpacing: 1.2),
@@ -189,8 +100,57 @@ class HuntDetailScreen extends ConsumerWidget {
     );
   }
 
+  void _showReportDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Report Hunt'),
+        content: const Text('Are you sure you want to report this hunt for inappropriate content?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Hunt reported. Thank you.')),
+              );
+            },
+            child: const Text('Report', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
 
-  // Stores difficulty color selections
+  Future<void> _handleStartHunt(BuildContext context, WidgetRef ref) async {
+    final locationService = ref.read(locationServiceProvider);
+    
+    final proceed = await showDialog<bool>(
+      context: context,
+      builder: (context) => const LocationRationaleDialog(),
+    );
+
+    if (proceed == true) {
+      final hasPermission = await locationService.handleLocationPermission();
+      if (hasPermission) {
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HuntGameplayScreen(hunt: hunt),
+            ),
+          );
+        }
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permission is required to play.')),
+          );
+        }
+      }
+    }
+  }
+
   Widget _buildDifficultyChip(String difficulty) {
     Color chipColor;
     switch (difficulty.toLowerCase()) {
@@ -203,7 +163,6 @@ class HuntDetailScreen extends ConsumerWidget {
       default:
         chipColor = Colors.orange;
     }
-
 
     return Chip(
       label: Text(

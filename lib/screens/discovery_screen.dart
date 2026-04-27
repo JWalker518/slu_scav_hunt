@@ -52,7 +52,7 @@ class HuntDiscoveryScreen extends ConsumerWidget {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.surface,
               ),
               onChanged: (value) {
                 ref.read(searchQueryProvider.notifier).setQuery(value);

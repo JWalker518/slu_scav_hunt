@@ -259,3 +259,38 @@ It still doesn't work, but we can debug this later. Please continue to step 5.2 
 - **`lib/screens/discovery_screen.dart`**: Updated the logout button to use the `authControllerProvider`.
 - **`lib/screens/hunt_creation_screen.dart`**: Refactored to use `huntControllerProvider`, improving error handling and UI state consistency.
 - **`about/requirements.md`**: Marked Step 5.2 as complete.
+
+## [2026-04-20] - Phase 5: Polish & Persistence - Finalized
+
+### Prompt:
+Please proceed to step 5.3
+
+### Added
+- **`lib/widgets/gameplay_hud.dart`**: Extracted riddle and hint controls from `HuntGameplayScreen`.
+- **`lib/widgets/gameplay_status_card.dart`**: Extracted distance and completion status from `HuntGameplayScreen`.
+- **`lib/widgets/hint_input_list.dart`**: Extracted dynamic hint fields from `HuntCreationScreen`.
+- **`lib/widgets/location_picker_card.dart`**: Extracted location selection UI from `HuntCreationScreen`.
+- **`lib/widgets/hunt_detail_header.dart`**: Extracted title and rating header from `HuntDetailScreen`.
+
+### Changed
+- **`lib/services/auth_service.dart`**: Fixed "ClientID not set" assertion error on Web by skipping `google_sign_in` initialization when using `signInWithPopup`.
+- **`lib/screens/hunt_gameplay_screen.dart`**, **`lib/screens/hunt_creation_screen.dart`**, **`lib/screens/hunt_detail_screen.dart`**: Refactored to use extracted widgets, bringing all files under the 200-line limit for better maintainability.
+- **`lib/screens/discovery_screen.dart`**: Updated search bar to use theme colors instead of hardcoded white.
+- **`test/screens/login_screen_test.dart`**, **`test/screens/registration_screen_test.dart`**, **`test/widgets/auth_gate_test.dart`**: Refactored to use mocked `AuthService`, resolving test regressions caused by real Firebase dependency.
+- **`about/requirements.md`**: Marked Step 5.3 as complete, finalizing the project roadmap.
+
+## [2026-04-20] - Phase 5: Polish & Persistence - Bug Fixes
+
+### Prompt:
+Can you complete step 5.4, remebering also to committ and push to Github?
+
+### Added
+- **`lib/providers/theme_provider.dart`**: Added `sharedPreferencesProvider` to allow for clean dependency injection and better testing.
+
+### Changed
+- **`lib/main.dart`**: Refactored to initialize `SharedPreferences` before `runApp` and override `sharedPreferencesProvider`. This ensures the `ThemeNotifier` has the correct initial state immediately, fixing the "second click" bug.
+- **`lib/providers/theme_provider.dart`**: 
+    - Refactored `ThemeNotifier` to use the pre-initialized `sharedPreferencesProvider`.
+    - Improved `toggleTheme` logic to detect system brightness using `PlatformDispatcher`, ensuring a visible theme change even when starting from `ThemeMode.system`.
+- **`test/screens/discovery_screen_test.dart`**, **`test/widget_test.dart`**: Updated tests to override `sharedPreferencesProvider` with a mock.
+- **`about/requirements.md`**: Marked Step 5.4 as complete.
