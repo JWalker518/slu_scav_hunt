@@ -131,3 +131,12 @@
 
 ### April 27th
 * I have created, and will continue to create new steps in the requirements page that aim to implement bug fixes. For example, I have created a new step in phase 5 aiming to fix the display button. Can you complete step 5.4, remebering also to committ and push to Github?
+
+* I am using firebase to host a web app version of this application. However, every time I try to create a new back end with a newer app version, I get the error "No buildpack groups detected." Can you help me diagnose what the problem may be?
+
+### April 29th
+* Please continue to step 6.1 in Phase 6 in requirements.md
+
+* Please proceed to step 6.2
+
+* Continue to step 6.3

@@ -114,10 +114,16 @@ Phase 5: Polish & Persistence
         - The display settings (i.e. dark or light mode) activates after the second activation of the button, then it works perfectly fine.  Please fix it so that the button activates upon the first button press.
 
 Phase 6: New Features and Bug Fixes
-    [ ] Step 6.1: Toggleable distance
+
+    [x] Step 6.1: Toggleable distance
         - Create a toggle in the hunt create screen that decides whether the user's exact distance will be shown during the hunt
         - When enabled, the exact distance will be shown, when disabled, it only tells you if you're close at certain distances
     
-    [ ] Step 6.2: Different Homepages
+    [x] Step 6.2: Different Homepages
         - Create two discovery screens for the app; One where the hunts are listed as "Distance shown" and the other where it is more riddle-like, and the user will not know their exact distance
         - Hunts with distance shown should only appear in the "Distance Shown" feed, and the other discovery page should have the "Riddle" hunts where you do not know your distance.
+
+    [x] Step 6.3: Different Theming
+        - The dark mode theming is hard to see currently as it is dark blue on a black background.
+        - Please change the dark blue to something more visible for ONLY the dark mode in the app
+        - Also change the "Riddle Mode" and "Distance Shown" homepag tab colors so that it is visible in light mode.  Currently, brown on dark blue is bad enough, but when the tab is selected, the button turns dark blue making it invisible in light mode.

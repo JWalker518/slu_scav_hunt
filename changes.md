@@ -294,3 +294,48 @@ Can you complete step 5.4, remebering also to committ and push to Github?
     - Improved `toggleTheme` logic to detect system brightness using `PlatformDispatcher`, ensuring a visible theme change even when starting from `ThemeMode.system`.
 - **`test/screens/discovery_screen_test.dart`**, **`test/widget_test.dart`**: Updated tests to override `sharedPreferencesProvider` with a mock.
 - **`about/requirements.md`**: Marked Step 5.4 as complete.
+
+## [2026-04-29] - Phase 6: New Features and Bug Fixes
+
+### Prompt:
+Please continue to step 6.1 in Phase 6 in requirements.md
+
+### Added
+- **`test/widgets/gameplay_status_card_test.dart`**: Created widget tests to verify `GameplayStatusCard` correctly toggles between exact distance and proximity clues.
+
+### Changed
+- **`lib/models/hunt.dart`**: Added `showDistance` (bool, defaults to `true`) to the `Hunt` model. Updated `fromFirestore` and `toMap` to support this field.
+- **`lib/screens/hunt_creation_screen.dart`**: Added a `SwitchListTile` to allow creators to choose whether to show the exact distance during the hunt.
+- **`lib/widgets/gameplay_status_card.dart`**: Updated to conditionally display either the exact distance (e.g., "150m") or proximity-based text clues (e.g., "You're getting warmer!") based on the hunt's `showDistance` setting.
+- **`lib/screens/hunt_gameplay_screen.dart`**: Updated to pass the `showDistance` property to `GameplayStatusCard`.
+- **`test/models/hunt_test.dart`**: Updated unit tests to include the `showDistance` field.
+- **`about/requirements.md`**: Marked Step 6.1 as complete.
+
+## [2026-04-29] - Phase 6: New Features and Bug Fixes - Continued
+
+### Prompt:
+please proceed to step 6.2
+
+### Added
+- **`test/providers/filtered_hunts_test.dart`**: Added tests for the new filtered providers.
+
+### Changed
+- **`lib/providers/hunt_providers.dart`**: Implemented `distanceShownHuntsProvider` and `riddleHuntsProvider` to filter hunts based on the `showDistance` property.
+- **`lib/screens/discovery_screen.dart`**: Refactored the discovery screen to use a `DefaultTabController` and `TabBar`, providing two distinct feeds: "Distance Shown" and "Riddle Mode".
+- **`test/screens/discovery_screen_test.dart`**: Updated widget tests to verify the new tabbed UI and filtered feeds.
+- **`about/requirements.md`**: Marked Step 6.2 as complete.
+
+## [2026-04-29] - Phase 6: New Features and Bug Fixes - Finalized
+
+### Prompt:
+Continue to step 6.3
+
+### Added
+- **`test/theme_test.dart`**: Created tests to verify dark mode color visibility and contrast.
+
+### Changed
+- **`lib/theme.dart`**:
+    - Defined `primaryColorDark` (a lighter blue `0xFF4D94FF`) specifically for dark mode.
+    - Updated `darkTheme` to use `primaryColorDark` for its `ColorScheme` and `ElevatedButtonTheme`.
+    - Set `ElevatedButton` foreground color to `black` in dark mode for better contrast against the lighter blue.
+- **`about/requirements.md`**: Marked Step 6.3 as complete, finalizing Phase 6.

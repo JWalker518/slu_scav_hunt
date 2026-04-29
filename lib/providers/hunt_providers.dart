@@ -45,3 +45,15 @@ final huntsProvider = StreamProvider<List<Hunt>>((ref) {
   
   return huntService.searchHunts(searchQuery);
 });
+
+/// Provider for hunts that show exact distance.
+final distanceShownHuntsProvider = Provider<AsyncValue<List<Hunt>>>((ref) {
+  final huntsAsync = ref.watch(huntsProvider);
+  return huntsAsync.whenData((hunts) => hunts.where((h) => h.showDistance).toList());
+});
+
+/// Provider for riddle-style hunts that hide exact distance.
+final riddleHuntsProvider = Provider<AsyncValue<List<Hunt>>>((ref) {
+  final huntsAsync = ref.watch(huntsProvider);
+  return huntsAsync.whenData((hunts) => hunts.where((h) => !h.showDistance).toList());
+});

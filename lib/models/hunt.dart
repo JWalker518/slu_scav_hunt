@@ -12,6 +12,7 @@ class Hunt {
   final String riddle;
   final List<String> hints; // New field for hints
   final String? imageUrl; // New optional field for media support
+  final bool showDistance; // Whether to show exact distance or proximity clues
 
   // Initialize the instance data
   Hunt({
@@ -26,6 +27,7 @@ class Hunt {
     required this.riddle,
     this.hints = const [], // Default to empty list
     this.imageUrl,
+    this.showDistance = true,
   });
 
   // Create a Hunt object from a Firestore document
@@ -52,6 +54,7 @@ class Hunt {
       riddle: data['riddle']?.toString() ?? 'No riddle provided',
       hints: _toStringList(data['hints']),
       imageUrl: data['imageUrl']?.toString(),
+      showDistance: data['showDistance'] is bool ? data['showDistance'] as bool : true,
     );
   }
 
@@ -82,6 +85,7 @@ class Hunt {
       'riddle': riddle,
       'hints': hints,
       'imageUrl': imageUrl,
+      'showDistance': showDistance,
     };
   }
 }

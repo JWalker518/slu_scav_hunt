@@ -35,7 +35,7 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('HuntDiscoveryScreen shows empty state', (WidgetTester tester) async {
+  testWidgets('HuntDiscoveryScreen shows empty state in tabs', (WidgetTester tester) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -49,14 +49,19 @@ void main() {
     );
 
     await tester.pumpAndSettle();
-    expect(find.text('No hunts found. Try a different search!'), findsOneWidget);
+    expect(find.text('No distance-based hunts found.'), findsOneWidget);
+    
+    // Tap the second tab
+    await tester.tap(find.text('Riddle Mode'));
+    await tester.pumpAndSettle();
+    expect(find.text('No riddle-style hunts found.'), findsOneWidget);
   });
 
-  testWidgets('HuntDiscoveryScreen shows list of hunts', (WidgetTester tester) async {
+  testWidgets('HuntDiscoveryScreen shows filtered hunts in respective tabs', (WidgetTester tester) async {
     final mockHunts = [
       Hunt(
         id: '1',
-        title: 'Hunt 1',
+        title: 'Distance Hunt',
         description: 'Desc 1',
         creatorName: 'User 1',
         creatorId: 'id1',
@@ -64,6 +69,19 @@ void main() {
         rating: 4.5,
         coordinates: const GeoPoint(0, 0),
         riddle: 'Riddle 1',
+        showDistance: true,
+      ),
+      Hunt(
+        id: '2',
+        title: 'Riddle Hunt',
+        description: 'Desc 2',
+        creatorName: 'User 2',
+        creatorId: 'id2',
+        difficulty: 'Hard',
+        rating: 5.0,
+        coordinates: const GeoPoint(0, 0),
+        riddle: 'Riddle 2',
+        showDistance: false,
       ),
     ];
 
@@ -80,7 +98,15 @@ void main() {
     );
 
     await tester.pumpAndSettle();
-    expect(find.text('Hunt 1'), findsOneWidget);
-    expect(find.text('EASY'), findsOneWidget);
+    
+    // In "Distance Shown" tab
+    expect(find.text('Distance Hunt'), findsOneWidget);
+    expect(find.text('Riddle Hunt'), findsNothing);
+
+    // Switch to "Riddle Mode" tab
+    await tester.tap(find.text('Riddle Mode'));
+    await tester.pumpAndSettle();
+    expect(find.text('Distance Hunt'), findsNothing);
+    expect(find.text('Riddle Hunt'), findsOneWidget);
   });
 }

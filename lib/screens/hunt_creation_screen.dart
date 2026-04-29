@@ -25,6 +25,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
   final _imageUrlController = TextEditingController();
   final List<TextEditingController> _hintControllers = [];
   String _difficulty = 'Normal';
+  bool _showDistance = true;
   LatLng? _selectedLocation;
 
   @override
@@ -104,6 +105,7 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
       imageUrl: _imageUrlController.text.trim().isNotEmpty 
           ? _imageUrlController.text.trim() 
           : null,
+      showDistance: _showDistance,
     );
 
     await ref.read(huntControllerProvider.notifier).createHunt(newHunt);
@@ -167,12 +169,19 @@ class _HuntCreationScreenState extends ConsumerState<HuntCreationScreen> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _difficulty,
+                    initialValue: _difficulty,
                     decoration: const InputDecoration(labelText: 'Difficulty'),
                     items: ['Easy', 'Normal', 'Hard']
                         .map((d) => DropdownMenuItem(value: d, child: Text(d)))
                         .toList(),
                     onChanged: (value) => setState(() => _difficulty = value!),
+                  ),
+                  const SizedBox(height: 16),
+                  SwitchListTile(
+                    title: const Text('Show Exact Distance'),
+                    subtitle: const Text('If disabled, only proximity clues will be shown (e.g., "You are very close")'),
+                    value: _showDistance,
+                    onChanged: (value) => setState(() => _showDistance = value),
                   ),
                   const SizedBox(height: 24),
                   HintInputList(

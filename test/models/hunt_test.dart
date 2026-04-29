@@ -16,6 +16,7 @@ void main() {
       const riddle = 'Test Riddle';
       const hints = ['Hint 1', 'Hint 2'];
       const imageUrl = 'https://example.com/image.png';
+      const showDistance = false;
 
       final hunt = Hunt(
         id: id,
@@ -29,6 +30,7 @@ void main() {
         riddle: riddle,
         hints: hints,
         imageUrl: imageUrl,
+        showDistance: showDistance,
       );
 
       expect(hunt.id, id);
@@ -42,6 +44,7 @@ void main() {
       expect(hunt.riddle, riddle);
       expect(hunt.hints, hints);
       expect(hunt.imageUrl, imageUrl);
+      expect(hunt.showDistance, showDistance);
     });
 
     test('toMap should return a correct map representation', () {
@@ -57,6 +60,7 @@ void main() {
         riddle: 'Test Riddle',
         hints: ['Hint 1', 'Hint 2'],
         imageUrl: 'https://example.com/image.png',
+        showDistance: false,
       );
 
       final map = hunt.toMap();
@@ -71,6 +75,7 @@ void main() {
       expect(map['riddle'], 'Test Riddle');
       expect(map['hints'], ['Hint 1', 'Hint 2']);
       expect(map['imageUrl'], 'https://example.com/image.png');
+      expect(map['showDistance'], false);
     });
   });
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:slu_scav_hunt/providers/hunt_providers.dart';
 import 'package:slu_scav_hunt/providers/auth_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';
@@ -14,91 +15,122 @@ class HuntDiscoveryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final huntsAsync = ref.watch(huntsProvider);
     final themeMode = ref.watch(themeProvider);
 
-    // The menu bar on the top of the screen
-    return Scaffold(
-      appBar: AppBar(
-        // The 'Hunt' title
-        title: const Text('Discover Hunts'),
-        actions: [
-          IconButton(
-            icon: Icon(themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () {
-              ref.read(themeProvider.notifier).toggleTheme();
-            },
-            tooltip: 'Toggle Theme',
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await ref.read(authControllerProvider.notifier).logout();
-            },
-            tooltip: 'Logout',
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              // The Search Bar background text
-              decoration: InputDecoration(
-                hintText: 'Search hunts...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surface,
-              ),
-              onChanged: (value) {
-                ref.read(searchQueryProvider.notifier).setQuery(value);
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Discover Hunts'),
+          actions: [
+            IconButton(
+              icon: Icon(themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode),
+              onPressed: () {
+                ref.read(themeProvider.notifier).toggleTheme();
               },
+              tooltip: 'Toggle Theme',
+            ),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await ref.read(authControllerProvider.notifier).logout();
+              },
+              tooltip: 'Logout',
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(110),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search hunts...',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.surface,
+                      isDense: true,
+                    ),
+                    onChanged: (value) {
+                      ref.read(searchQueryProvider.notifier).setQuery(value);
+                    },
+                  ),
+                ),
+                const TabBar(
+                  tabs: [
+                    Tab(text: 'Distance Shown', icon: Icon(Icons.straighten)),
+                    Tab(text: 'Riddle Mode', icon: Icon(Icons.psychology)),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-      ),
-      body: huntsAsync.when(
-        data: (hunts) => _buildHuntList(hunts),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(
-          child: Text('Error: $err'),
+        body: TabBarView(
+          children: [
+            _HuntListTab(
+              huntsAsync: ref.watch(distanceShownHuntsProvider),
+              emptyMessage: 'No distance-based hunts found.',
+            ),
+            _HuntListTab(
+              huntsAsync: ref.watch(riddleHuntsProvider),
+              emptyMessage: 'No riddle-style hunts found.',
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HuntCreationScreen()),
-          );
-        },
-        tooltip: 'Create New Hunt',
-        child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HuntCreationScreen()),
+            );
+          },
+          tooltip: 'Create New Hunt',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
+}
 
+class _HuntListTab extends StatelessWidget {
+  final AsyncValue<List<Hunt>> huntsAsync;
+  final String emptyMessage;
 
-  Widget _buildHuntList(List<Hunt> hunts) {
+  const _HuntListTab({
+    required this.huntsAsync,
+    required this.emptyMessage,
+  });
 
-    // When searching, return a message if no hunts are found
+  @override
+  Widget build(BuildContext context) {
+    return huntsAsync.when(
+      data: (hunts) => _buildHuntList(context, hunts),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Center(child: Text('Error: $err')),
+    );
+  }
+
+  Widget _buildHuntList(BuildContext context, List<Hunt> hunts) {
     if (hunts.isEmpty) {
-      return const Center(
-        child: Text('No hunts found. Try a different search!'),
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(emptyMessage, textAlign: TextAlign.center),
+        ),
       );
     }
 
-    // The list of hunts to be presented on the homepage
     return ListView.builder(
       itemCount: hunts.length,
       padding: const EdgeInsets.all(8),
       itemBuilder: (context, index) {
         final hunt = hunts[index];
-
-        // The card presenting the hunt on the homepage
         return HuntCard(
           hunt: hunt,
           onTap: () {

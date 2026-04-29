@@ -163,6 +163,7 @@ class _HuntGameplayScreenState extends ConsumerState<HuntGameplayScreen> {
                 return GameplayStatusCard(
                   isCompleted: _isCompleted,
                   distance: distance,
+                  showDistance: widget.hunt.showDistance,
                   onBack: () => Navigator.pop(context),
                 );
               },

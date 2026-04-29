@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // Brand Colors
   static const Color primaryColor = Color(0xFF003D7C); // Example SLU Blue
+  static const Color primaryColorDark = Color(0xFF4D94FF); // Lighter Blue for Dark Mode
   static const Color secondaryColor = Color(0xFFC8102E); // Example SLU Red
   static const Color accentColor = Color(0xFFFFB81C); // Example Gold
 
@@ -48,6 +49,13 @@ class AppTheme {
           color: Colors.black87,
         ),
       ),
+      tabBarTheme: const TabBarThemeData(
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white70,
+        indicatorColor: accentColor,
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -55,8 +63,8 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryColor,
-        primary: primaryColor,
+        seedColor: primaryColorDark,
+        primary: primaryColorDark,
         secondary: secondaryColor,
         brightness: Brightness.dark,
       ),
@@ -64,10 +72,17 @@ class AppTheme {
         centerTitle: true,
         elevation: 0,
       ),
+      tabBarTheme: const TabBarThemeData(
+        labelColor: primaryColorDark,
+        unselectedLabelColor: Colors.white60,
+        indicatorColor: primaryColorDark,
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
-          foregroundColor: Colors.white,
+          backgroundColor: primaryColorDark,
+          foregroundColor: Colors.black, // Better contrast on light blue
           textStyle: const TextStyle(fontWeight: FontWeight.bold),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(
