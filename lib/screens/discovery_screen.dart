@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:slu_scav_hunt/providers/hunt_providers.dart';
 import 'package:slu_scav_hunt/providers/auth_providers.dart';
 import 'package:slu_scav_hunt/models/hunt.dart';

@@ -5,7 +5,7 @@ Description: This app is designed to give users a unique experience of creating 
  
   
 ## AI Assistant Guardrails 
-Gemini: When reading this file to implement a step, you MUST adhere to the following architectural rules: 
+Gemini: When reading this file to implement a step or make corrections, you MUST adhere to the following architectural rules: 
  
 1.	State Management: Use flutter_riverpod exclusively. Do not use setState for complex logic. 
 
